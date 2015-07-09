@@ -12,7 +12,6 @@
 //            |_\  |--^.  /           
 //           /_]"|_| /_)_/            
 //              /_]"  /_]"            
-//                                    
 //
 // Created by TepigMC
 //
@@ -21,7 +20,8 @@
 // 25 Feb 2015 TepigMC: Modified images; Fix drawing errors
 // 26 Feb 2015 TepigMC: Removed missing texture checks; Rename files
 // 27 Feb 2015 TepigMC: Compacted backgrounds and folds into sprite files
-// 28 Feb 2015 TepigMC: Compacted labels and titles into sprite files; Added "Advanced (Standard)" head; Added "Show Helmet Overlay" option
+// 28 Feb 2015 TepigMC: Compacted labels and titles into sprite files; Added "Advanced (Standard)" head
+//                      Added "Show Helmet Overlay" option; Added texture options
 //
 // NOTES:
 //
@@ -109,18 +109,27 @@ var titleSprites = {
 };
 
 // Function to help with defining the inputs
-Generator.makeTextureInput = function(texture, width, height) {
+Generator.makeTextureInput = function(texture, width, height, choices) {
   Generator.defineInput(texture, {
     type: "texture", 
     standardWidth: width, 
-    standardHeight: height
+    standardHeight: height,
+    choices: choices
   });
 };
 
 // Define user inputs
-Generator.makeTextureInput(pigTexture,    64, 32);
-Generator.makeTextureInput(saddleTexture, 64, 32);
-Generator.makeTextureInput(armorTexture,  64, 32);
+Generator.makeTextureInput(pigTexture, 64, 32, [
+  "Pig (Vanilla)","Pig (Faithful)","Pig (Space Pig)","Tepig (by Audra)","Tepig (by Elpis)"
+]);
+Generator.makeTextureInput(saddleTexture, 64, 32, [
+  "Saddle (Vanilla)","Saddle (Faithful)","Saddle (Space Pig)"
+]);
+Generator.makeTextureInput(armorTexture, 64, 32, [
+  "Diamond Armor (Vanilla)","Gold Armor (Vanilla)","Chainmail Armor (Vanilla)","Iron Armor (Vanilla)",
+  "Diamond Armor (Faithful)","Gold Armor (Faithful)","Chainmail Armor (Faithful)","Iron Armor (Faithful)",
+  "Armor (Space Pig)"
+]);
 
 // Function to easily draw a section of an image
 Generator.drawSprite = function(sprite, spriteJson, x, y) {
@@ -163,14 +172,14 @@ var seperateHelmet = helmetStyle === "Seperate";
 var seperateBoots = bootsStyle === "Seperate";
 
 // Head Functions
-Generator.drawHeadAdvanced = function(texture, x, y, isHelmet) {
+Generator.drawHeadAdvanced = function(texture, x, y, isHelmet, drawLabels) {
   if (!isHelmet) {
     if (!standardAdvancedHead) { Generator.drawSprite(bgSprite, bgSprites.headAdvanced, x, y); }
     else { Generator.drawSprite(bgSprite, bgSprites.headStandardAdvanced, x+16, y); }
   }
 
-  Generator.drawHeadAdvancedShape(texture, x, y, 0);
-  if (isHelmet && showHelmetOverlay) { Generator.drawHeadAdvancedShape(texture, x, y, 32); }
+  Generator.drawHeadAdvancedShape(texture, x+16, y, 0, 0);
+  if (isHelmet && showHelmetOverlay) { Generator.drawHeadAdvancedShape(texture, x+16, y, 32, 0); }
 
   if (!standardAdvancedHead) {
     Generator.drawSprite(foldSprite, foldSprites.headAdvancedCuts, x, y);
@@ -180,43 +189,41 @@ Generator.drawHeadAdvanced = function(texture, x, y, isHelmet) {
     if (showFolds)  { Generator.drawSprite(foldSprite, foldSprites.headStandardAdvanced, x+16, y); }
   }
 
-  if (!isHelmet) {
-    if (showLabels) {
-      if (!standardAdvancedHead) { Generator.drawSprite(labelSprite, labelSprites.head, x+192, y+80); }
-      else {
-        Generator.drawSprite(labelSprite, labelSprites.headStandardAdvanced, x+16, y+80);
-        Generator.drawSprite(labelSprite, labelSprites.headStandardAdvanced, x+192, y+80);
-      }
-      Generator.drawSprite(labelSprite, labelSprites.headNose3D, x+96, y+96);
+  if (drawLabels && showLabels) {
+    if (!standardAdvancedHead) { Generator.drawSprite(labelSprite, labelSprites.head, x+192, y+80); }
+    else {
+      Generator.drawSprite(labelSprite, labelSprites.headStandardAdvanced, x+16, y+80);
+      Generator.drawSprite(labelSprite, labelSprites.headStandardAdvanced, x+192, y+80);
     }
+    if (!flatNose)  { Generator.drawSprite(labelSprite, labelSprites.headNose3D, x+96, y+96); }
     if (showTitles) { Generator.drawSprite(titleSprite, titleSprites.head, x+22, y+12); }
   }
 }
-Generator.drawHeadAdvancedShape = function(texture, x, y, textureOffsetX) {
-  Generator.drawImage(texture, {x:textureOffsetX,    y:8,  w:8, h:2}, {x:x+16,  y:y+64,  w:64, h:16}); // Right 1
-  Generator.drawImage(texture, {x:textureOffsetX+2,  y:10, w:6, h:6}, {x:x+32,  y:y+80,  w:48, h:48}); // Right 2
-  Generator.drawImage(texture, {x:textureOffsetX+8,  y:8,  w:8, h:8}, {x:x+80,  y:y+64,  w:64, h:64}); // Face
-  Generator.drawImage(texture, {x:textureOffsetX+16, y:8,  w:8, h:2}, {x:x+144, y:y+64,  w:64, h:16}); // Left 1
-  Generator.drawImage(texture, {x:textureOffsetX+16, y:10, w:6, h:6}, {x:x+144, y:y+80,  w:48, h:48}); // Left 2
-  Generator.drawImage(texture, {x:textureOffsetX+8,  y:0,  w:8, h:8}, {x:x+80,  y:y,     w:64, h:64}); // Top
-  Generator.drawImage(texture, {x:textureOffsetX+16, y:0,  w:8, h:6}, {x:x+80,  y:y+128, w:64, h:48}); // Bottom
-  Generator.drawImage(texture, {x:textureOffsetX+24, y:8,  w:8, h:2}, {x:x+208, y:y+64,  w:64, h:16}); // Back 1
+Generator.drawHeadAdvancedShape = function(texture, x, y, tx, ty) {
+  Generator.drawImage(texture, {x:tx,    y:ty+8,  w:8, h:2}, {x:x,     y:y+64,  w:64, h:16}); // Right 1
+  Generator.drawImage(texture, {x:tx+2,  y:ty+10, w:6, h:6}, {x:x+16,  y:y+80,  w:48, h:48}); // Right 2
+  Generator.drawImage(texture, {x:tx+8,  y:ty+8,  w:8, h:8}, {x:x+64,  y:y+64,  w:64, h:64}); // Face
+  Generator.drawImage(texture, {x:tx+16, y:ty+8,  w:8, h:2}, {x:x+128, y:y+64,  w:64, h:16}); // Left 1
+  Generator.drawImage(texture, {x:tx+16, y:ty+10, w:6, h:6}, {x:x+128, y:y+80,  w:48, h:48}); // Left 2
+  Generator.drawImage(texture, {x:tx+8,  y:ty,    w:8, h:8}, {x:x+64,  y:y,     w:64, h:64}); // Top
+  Generator.drawImage(texture, {x:tx+16, y:ty,    w:8, h:6}, {x:x+64,  y:y+128, w:64, h:48}); // Bottom
+  Generator.drawImage(texture, {x:tx+24, y:ty+8,  w:8, h:2}, {x:x+192, y:y+64,  w:64, h:16}); // Back 1
   if (!standardAdvancedHead) {
-    Generator.drawImage(texture, {x:textureOffsetX+24, y:10, w:8, h:6}, {x:x+192, y:y+80,  w:64, h:48}); // Back 2
-    Generator.drawImage(texture, {x:textureOffsetX+24, y:10, w:8, h:2}, {x:x+16,  y:y+144, w:64, h:16}, {rotate:270}); // Back 3
+    Generator.drawImage(texture, {x:tx+24, y:ty+10, w:8, h:6}, {x:x+176, y:y+80,  w:64, h:48}); // Back 2
+    Generator.drawImage(texture, {x:tx+24, y:ty+10, w:8, h:2}, {x:x,     y:y+144, w:64, h:16}, {rotate:270}); // Back 3
   }
 }
-Generator.drawHeadSimple = function(texture, x, y, isHelmet) {
+Generator.drawHeadSimple = function(texture, x, y, isHelmet, drawLabels) {
   if (!isHelmet) { Generator.drawSprite(bgSprite, bgSprites.headSimple, x, y);}
 
   Generator.drawHeadSimpleShape(texture, x, y, 0);
   if (isHelmet && showHelmetOverlay) { Generator.drawHeadSimpleShape(texture, x, y, 32); }
 
   if (showFolds)  { Generator.drawSprite(foldSprite, foldSprites.headSimple, x, y); }
-  if (!isHelmet) { 
+  if (drawLabels) { 
     if (showLabels) {
       Generator.drawSprite(labelSprite, labelSprites.head, x+192, y+88);
-      Generator.drawSprite(labelSprite, labelSprites.headNose3D, x+80, y+96);
+      if (!flatNose) { Generator.drawSprite(labelSprite, labelSprites.headNose3D, x+80, y+96); }
     }
     if (showTitles) { Generator.drawSprite(titleSprite, titleSprites.head, x+6, y+12); }
   }
@@ -249,7 +256,7 @@ Generator.drawNoseFlat = function(texture, x, y) {
 }
 
 // Body Function
-Generator.drawBody = function(texture, x, y, isSaddle) {
+Generator.drawBody = function(texture, x, y, isSaddle, drawLabels) {
   if (!isSaddle) { Generator.drawSprite(bgSprite, bgSprites.body, x, y); }
 
   Generator.drawImage(texture, {x:28, y:16, w:8,  h:16}, {x:x,     y:y+88,  w:64, h:128}); // Right
@@ -260,7 +267,7 @@ Generator.drawBody = function(texture, x, y, isSaddle) {
   Generator.drawImage(texture, {x:46, y:8,  w:10, h:8},  {x:x+64,  y:y+216, w:80, h:64}, {flip:"vertical"}); // Back
 
   if (showFolds)  { Generator.drawSprite(foldSprite, foldSprites.body, x, y); }
-  if (!isSaddle) {
+  if (drawLabels) {
     if (showLabels) {
       Generator.drawSprite(labelSprite, labelSprites.bodyHead, x+72, y+24);
       Generator.drawSprite(labelSprite, labelSprites.bodyLeg1, x+64, y+96);
@@ -311,31 +318,24 @@ Generator.drawSaddleSeperate = function(texture, x, y) {
   if (showFolds)  { Generator.drawSprite(foldSprite, foldSprites.saddle, x, y); }
   if (showTitles) { Generator.drawSprite(titleSprite, titleSprites.saddle, x, y-26); }
 }
-// Helmet Function (only for seperate helmet)
+// Helmet Functions (only for seperate helmet)
 Generator.drawHelmetSeperate = function(texture, x, y) {
   Generator.drawSprite(bgSprite, bgSprites.helmet, x, y);
 
-  // Layer 1
-  Generator.drawImage(texture, {x:0,  y:8,  w:8, h:3}, {x:x,     y:y+64,  w:64, h:24}); // Right 1
-  Generator.drawImage(texture, {x:2,  y:10, w:6, h:5}, {x:x+16,  y:y+80,  w:48, h:40}); // Right 2
-  Generator.drawImage(texture, {x:8,  y:8,  w:8, h:8}, {x:x+64,  y:y+64,  w:64, h:64}); // Face
-  Generator.drawImage(texture, {x:16, y:8,  w:8, h:3}, {x:x+128, y:y+64,  w:64, h:24}); // Left 1
-  Generator.drawImage(texture, {x:16, y:10, w:6, h:5}, {x:x+128, y:y+80,  w:48, h:40}); // Left 2
-  Generator.drawImage(texture, {x:24, y:8,  w:8, h:3}, {x:x+192, y:y+64,  w:64, h:24}); // Back
-  Generator.drawImage(texture, {x:8,  y:0,  w:8, h:8}, {x:x+64,  y:y,     w:64, h:64}); // Top
-  Generator.drawImage(texture, {x:16, y:0,  w:8, h:8}, {x:x+64,  y:y+128, w:64, h:64}); // Bottom
-  // Layer 2
-  Generator.drawImage(texture, {x:32, y:8,  w:8, h:3}, {x:x,     y:y+64,  w:64, h:24}); // Right 1
-  Generator.drawImage(texture, {x:34, y:10, w:6, h:5}, {x:x+16,  y:y+80,  w:48, h:40}); // Right 2
-  Generator.drawImage(texture, {x:40, y:8,  w:8, h:8}, {x:x+64,  y:y+64,  w:64, h:64}); // Face
-  Generator.drawImage(texture, {x:48, y:8,  w:8, h:3}, {x:x+128, y:y+64,  w:64, h:24}); // Left 1
-  Generator.drawImage(texture, {x:48, y:10, w:6, h:5}, {x:x+128, y:y+80,  w:48, h:40}); // Left 2
-  Generator.drawImage(texture, {x:56, y:8,  w:8, h:3}, {x:x+192, y:y+64,  w:64, h:24}); // Back
-  Generator.drawImage(texture, {x:40, y:0,  w:8, h:8}, {x:x+64,  y:y,     w:64, h:64}); // Top
-  Generator.drawImage(texture, {x:48, y:0,  w:8, h:8}, {x:x+64,  y:y+128, w:64, h:64}); // Bottom
+  Generator.drawHelmetSeperateShape(texture, x, y, 0, 0);
+  if (showHelmetOverlay) { Generator.drawHelmetSeperateShape(texture, x, y, 32, 0); }
 
   if (showFolds)  { Generator.drawSprite(foldSprite, foldSprites.helmet, x, y); }
   if (showTitles) { Generator.drawSprite(titleSprite, titleSprites.helmet, x-8, y+12); }
+}
+Generator.drawHelmetSeperateShape = function(texture, x, y, tx, ty) {
+  Generator.drawImage(texture, {x:tx,    y:ty+8,  w:8, h:3}, {x:x,     y:y+64,  w:64, h:24}); // Right 1
+  Generator.drawImage(texture, {x:tx+2,  y:ty+11, w:6, h:5}, {x:x+16,  y:y+88,  w:48, h:40}); // Right 2
+  Generator.drawImage(texture, {x:tx+8,  y:ty+8,  w:8, h:8}, {x:x+64,  y:y+64,  w:64, h:64}); // Face
+  Generator.drawImage(texture, {x:tx+16, y:ty+8,  w:8, h:3}, {x:x+128, y:y+64,  w:64, h:24}); // Left 1
+  Generator.drawImage(texture, {x:tx+16, y:ty+11, w:6, h:5}, {x:x+128, y:y+88,  w:48, h:40}); // Left 2
+  Generator.drawImage(texture, {x:tx+24, y:ty+8,  w:8, h:3}, {x:x+192, y:y+64,  w:64, h:24}); // Back
+  Generator.drawImage(texture, {x:tx+8,  y:ty,    w:8, h:8}, {x:x+64,  y:y,     w:64, h:64}); // Top
 }
 // Boot Function
 Generator.drawBoot = function(texture, x, y, seperate) {
@@ -405,10 +405,10 @@ Generator.usePage("Pig");
 Generator.drawOpaque();
 Generator.drawCredits();
 
-if (simpleHead) { Generator.drawHeadSimple(pigTexture, 64, 96, false);   }
-else            { Generator.drawHeadAdvanced(pigTexture, 48, 96, false); }
+if (simpleHead) { Generator.drawHeadSimple(pigTexture, 64, 96, false, !useHelmet || seperateHelmet);   }
+else            { Generator.drawHeadAdvanced(pigTexture, 48, 96, false, !useHelmet || seperateHelmet); }
 
-Generator.drawBody(pigTexture, 56, 304, false);
+Generator.drawBody(pigTexture, 56, 304, false, !useSaddle || seperateSaddle);
 Generator.drawLeg(pigTexture, 392, 104, 1);
 Generator.drawLeg(pigTexture, 392, 288, 2);
 Generator.drawLeg(pigTexture, 392, 472, 3);
@@ -419,10 +419,10 @@ else          { Generator.drawNose3D(pigTexture, 248, 272); }
 
 // Draw the accessories on the pig
 if (useHelmet && !seperateHelmet) {
-  if (simpleHead) { Generator.drawHeadSimple(armorTexture, 64, 96, true); }
-  else            { Generator.drawHeadAdvanced(armorTexture, 48, 96, true); }
+  if (simpleHead) { Generator.drawHeadSimple(armorTexture, 64, 96, true, true); }
+  else            { Generator.drawHeadAdvanced(armorTexture, 48, 96, true, true); }
 }
-if (useSaddle && !seperateSaddle) { Generator.drawBody(saddleTexture, 56, 304, true); }
+if (useSaddle && !seperateSaddle) { Generator.drawBody(saddleTexture, 56, 304, true, true); }
 if (useBoots && !seperateBoots) {
   Generator.drawBoot(armorTexture, 392, 160, false);
   Generator.drawBoot(armorTexture, 392, 344, false);
