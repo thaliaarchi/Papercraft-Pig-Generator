@@ -7,11 +7,13 @@ There are also many customizable options to change the type of head, if the pig 
 There is also a bonus matching ultra mini pig that was inspired by [Maki](http://pixelpapercraft.com/user/maki).
 
 ##Textures
-The textures that are provided are from Vanilla Minecraft,
-[Faithful 32x](http://www.minecraftforum.net/forums/mapping-and-modding/resource-packs/1223254-faithful-32x32-pack-update-red-cat-clay-1-8) by Vattic,
-[Space Pig](http://www.planetminecraft.com/texture_pack/spacepig-space-apocalypse-16x-wip/) by jimPIG,
-[Pokemon Mob Skins](http://www.planetminecraft.com/texture_pack/pokemon-mob-skins/) by Audra,
-and [Elpis' Pokecraft Mob Textures](http://www.minecraftforum.net/forums/mapping-and-modding/resource-packs/1223927-elpis-pokecraft-mob-textures).
+The textures that are provided are from:
+- Vanilla Minecraft
+- [Faithful 32x](http://www.minecraftforum.net/forums/mapping-and-modding/resource-packs/1223254-faithful-32x32-pack-update-red-cat-clay-1-8) by Vattic,
+- [Space Pig](http://www.planetminecraft.com/texture_pack/spacepig-space-apocalypse-16x-wip/) by jimPIG,
+- [Pokemon Mob Skins](http://www.planetminecraft.com/texture_pack/pokemon-mob-skins/) by Audra,
+- [Elpis' Pokecraft Mob Textures](http://www.minecraftforum.net/forums/mapping-and-modding/resource-packs/1223927-elpis-pokecraft-mob-textures) by Elpis
+
 If you want to input your own textures, here are the locations where you can find them.
   - **Pig texture** found at `assets\minecraft\textures\entity\pig\**pig.png**`
   - **Saddle texture** found at `assets\minecraft\textures\entity\pig\**pig_saddle.png**`

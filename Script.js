@@ -357,7 +357,7 @@ Generator.drawUltraMini = function(x, y) {
   Generator.drawSprite(bgSprite, bgSprites.ultraMini, x, y);
 
   Generator.drawUltraMiniBody(pigTexture, x, y);
-  Generator.drawUltraMiniLegs(pigTexture, x, y);
+  Generator.drawUltraMiniLegs(armorTexture, x, y);
   Generator.drawUltraMiniEnds(pigTexture, x, y);
   if (useSaddle) { Generator.drawUltraMiniBody(saddleTexture, x, y);  }
   if (useHelmet) { Generator.drawUltraMiniHelmet(armorTexture, x, y); }
