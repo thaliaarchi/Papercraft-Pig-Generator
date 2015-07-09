@@ -2,16 +2,16 @@ define(function() {
   var Resources = {
     images: [
       {
-        id: "Background Sprite",
+        id: "Background Sprites",
         url: "image/background-sprites.png"
       },{
-        id: "Fold Sprite",
+        id: "Fold Sprites",
         url: "image/fold-sprites.png"
       },{
-        id: "Label Sprite",
+        id: "Label Sprites",
         url: "image/label-sprites.png"
       },{
-        id: "Title Sprite",
+        id: "Title Sprites",
         url: "image/title-sprites.png"
       },{
         id: "Pig (Vanilla)",
