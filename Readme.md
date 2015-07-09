@@ -15,9 +15,9 @@ The textures that are provided are from:
 - [Elpis' Pokecraft Mob Textures](http://www.minecraftforum.net/forums/mapping-and-modding/resource-packs/1223927-elpis-pokecraft-mob-textures) by Elpis
 
 If you want to input your own textures, here are the locations where you can find them.
-  - **Pig texture** found at `assets\minecraft\textures\entity\pig\**pig.png**`
-  - **Saddle texture** found at `assets\minecraft\textures\entity\pig\**pig_saddle.png**`
-  - **Armor texture** (Layer 1) found at `assets\minecraft\textures\models\armor\**<ARMOR>_layer_1.png**`
+  - **Pig texture** found at `assets\minecraft\textures\entity\pig\pig.png`
+  - **Saddle texture** found at `assets\minecraft\textures\entity\pig\pig_saddle.png`
+  - **Armor texture** (Layer 1) found at `assets\minecraft\textures\models\armor\<ARMOR>_layer_1.png`
 
 ##Sizing
 The saddle, helmet, and boots can vary in texture size, so the generator was made to be as general as possible.
