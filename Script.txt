@@ -1,0 +1,246 @@
+/************************************\
+* MINECRAFT PIG PAPERCRAFT GENERATOR *
+*         Created by TepigMC         *
+*            ,.                      *
+*           (_|,.                    *
+*          ,' /, )_______   _        *
+*       __j o``-'        `.'-)'      *
+*      (")                 \'        *
+*       `-j                |         *
+*         `-._(           /          *
+*            |_\  |--^.  /           *
+*           /_]'|_| /_)_/            *
+*              /_]'  /_]'            *
+*                                    *
+\************************************/
+
+var pigTexture = "Pig";
+var saddleTexture = "Saddle";
+var armorTexture = "Armor";
+
+//Boolean settings (these will each need form controls)
+var flatNose = true;
+var fullHead = false;
+var useSaddle = true;
+var useHelmet = true;
+var useBoots  = true;
+var seperateSaddle = true;
+var seperateHelmet = true;
+var seperateBoots  = true;
+
+//Set the standard texture size (this is required so that higher resolution textures will also work)
+Generator.setTextureSize = function(texture, width, height) {
+  Generator.setTextureOption(texture, "standardWidth",  width);
+  Generator.setTextureOption(texture, "standardHeight", height);
+}
+
+Generator.setTextureSize(pigTexture,    64, 32);
+Generator.setTextureSize(saddleTexture, 64, 32);
+Generator.setTextureSize(armorTexture,  64, 32);
+
+//Head Functions
+Generator.drawHead = function(texture, x, y) {
+  if (!Generator.hasTexture(texture)) { return; }
+  Generator.drawTexture(texture, {x:0,  y:8,  w:8, h:2}, {x:x,     y:y+64,  w:64, h:16}); //Right 1
+  Generator.drawTexture(texture, {x:2,  y:10, w:6, h:6}, {x:x+16,  y:y+80,  w:48, h:48}); //Right 2
+  Generator.drawTexture(texture, {x:8,  y:8,  w:8, h:8}, {x:x+64,  y:y+64,  w:64, h:64}); //Face
+  Generator.drawTexture(texture, {x:16, y:8,  w:8, h:2}, {x:x+128, y:y+64,  w:64, h:16}); //Left 1
+  Generator.drawTexture(texture, {x:16, y:10, w:6, h:6}, {x:x+128, y:y+80,  w:48, h:48}); //Left 2
+  Generator.drawTexture(texture, {x:24, y:8,  w:8, h:2}, {x:x+192, y:y+64,  w:64, h:16}); //Back 1
+  Generator.drawTexture(texture, {x:24, y:10, w:8, h:6}, {x:x+176, y:y+80,  w:64, h:48}); //Back 2
+  Generator.drawTexture(texture, {x:24, y:10, w:8, h:2}, {x:x,     y:y+144, w:64, h:16}, {rotate:270}); //Back 3
+  Generator.drawTexture(texture, {x:8,  y:0,  w:8, h:8}, {x:x+64,  y:y,     w:64, h:64}); //Top
+  Generator.drawTexture(texture, {x:16, y:0,  w:8, h:6}, {x:x+64,  y:y+128, w:64, h:48}); //Bottom
+}
+Generator.drawHeadFull = function(texture, x, y) {
+  if (!Generator.hasTexture(texture)) { return; }
+  Generator.drawTexture(texture, {x:0,  y:8, w:8, h:8}, {x:x,     y:y+64,  w:64, h:64}); //Right
+  Generator.drawTexture(texture, {x:8,  y:8, w:8, h:8}, {x:x+64,  y:y+64,  w:64, h:64}); //Face
+  Generator.drawTexture(texture, {x:16, y:8, w:8, h:8}, {x:x+128, y:y+64,  w:64, h:64}); //Left
+  Generator.drawTexture(texture, {x:24, y:8, w:8, h:8}, {x:256,   y:y+64,  w:64, h:64}); //Back
+  Generator.drawTexture(texture, {x:8,  y:0, w:8, h:8}, {x:x+64,  y:y,     w:64, h:64}); //Top
+  Generator.drawTexture(texture, {x:16, y:0, w:8, h:8}, {x:x+64,  y:y+128, w:64, h:64}); //Bottom
+}
+//Nose Functions
+Generator.drawNose = function(texture, x, y) {
+  if (!Generator.hasTexture(texture)) { return; }
+  Generator.drawTexture(texture, {x:16, y:17, w:1, h:3}, {x:x,    y:y+8,  w:8,  h:24}); //Right
+  Generator.drawTexture(texture, {x:17, y:17, w:4, h:3}, {x:x+8,  y:y+8,  w:32, h:24}); //Center
+  Generator.drawTexture(texture, {x:21, y:17, w:1, h:3}, {x:x+40, y:y+8,  w:8,  h:24}); //Left
+  Generator.drawTexture(texture, {x:10, y:12, w:4, h:3}, {x:x+48, y:y+8,  w:32, h:24}, {flip:"horizontal"}); //Back
+  Generator.drawTexture(texture, {x:17, y:16, w:4, h:1}, {x:x+8,  y:y,    w:32, h:8}); //Top
+  Generator.drawTexture(texture, {x:21, y:16, w:4, h:1}, {x:x+8,  y:y+32, w:32, h:8}); //Bottom
+}
+Generator.drawNoseFlat = function(texture, x, y) {
+  if (!Generator.hasTexture(texture)) { return; }
+  Generator.drawTexture(texture, {x:17, y:17, w:4, h:3}, {x:x+80,  y:y+96,  w:32, h:24});
+}
+//Body Function
+Generator.drawBody = function(texture, x, y) {
+  if (!Generator.hasTexture(texture)) { return; }
+  Generator.drawTexture(texture, {x:28, y:16, w:8,  h:16}, {x:x,     y:y+64,  w:64, h:128}); //Right
+  Generator.drawTexture(texture, {x:36, y:16, w:10, h:16}, {x:x+64,  y:y+64,  w:80, h:128}); //Bottom
+  Generator.drawTexture(texture, {x:46, y:16, w:8,  h:16}, {x:x+144, y:y+64,  w:64, h:128}); //Left
+  Generator.drawTexture(texture, {x:54, y:16, w:10, h:16}, {x:x+208, y:y+64,  w:80, h:128}); //Top
+  Generator.drawTexture(texture, {x:36, y:8,  w:10, h:8},  {x:x+64,  y:y,     w:80, h:64}); //Front
+  Generator.drawTexture(texture, {x:46, y:8,  w:10, h:8},  {x:x+64,  y:y+192, w:80, h:64}, {flip:"vertical"}); //Back
+}
+//Leg Function
+Generator.drawLeg = function(texture, x, y) { //all legs on a pig are the same, so no flipping needed
+  if (!Generator.hasTexture(texture)) { return; }
+  Generator.drawTexture(texture, {x:0,  y:20, w:4, h:6}, {x:x,    y:y+32, w:32, h:48}); //Right
+  Generator.drawTexture(texture, {x:4,  y:20, w:4, h:6}, {x:x+32, y:y+32, w:32, h:48}); //Front
+  Generator.drawTexture(texture, {x:8,  y:20, w:4, h:6}, {x:x+64, y:y+32, w:32, h:48}); //Left
+  Generator.drawTexture(texture, {x:12, y:20, w:4, h:6}, {x:x+96, y:y+32, w:32, h:48}); //Back
+  Generator.drawTexture(texture, {x:4,  y:16, w:4, h:4}, {x:x+32, y:y,    w:32, h:32}); //Top
+  Generator.drawTexture(texture, {x:8,  y:16, w:4, h:4}, {x:x+32, y:y+80, w:32, h:32}); //Bottom
+}
+
+
+//Saddle Function (only for seperate saddle)
+Generator.drawSaddle = function(texture, x, y) {
+  if (!Generator.hasTexture(texture)) { return; }
+  Generator.drawTexture(texture, {x:41, y:16, w:5,  h:16}, {x:x,     y:y, w:40, h:128}); //Bottom Left
+  Generator.drawTexture(texture, {x:46, y:16, w:8,  h:16}, {x:x+40,  y:y, w:64, h:128}); //Left
+  Generator.drawTexture(texture, {x:54, y:16, w:10, h:16}, {x:x+104, y:y, w:80, h:128}); //Top
+  Generator.drawTexture(texture, {x:28, y:16, w:8,  h:16}, {x:x+184, y:y, w:64, h:128}); //Right
+  Generator.drawTexture(texture, {x:41, y:16, w:5,  h:16}, {x:x+248, y:y, w:40, h:128}); //Bottom Right
+
+  Generator.drawTexture(texture, {x:41, y:16, w:5,  h:16}, {x:x,     y:y+128, w:40, h:128}, {flip:"vertical"}); //Bottom Left
+  Generator.drawTexture(texture, {x:46, y:16, w:8,  h:16}, {x:x+40,  y:y+128, w:64, h:128}, {flip:"vertical"}); //Left
+  Generator.drawTexture(texture, {x:54, y:16, w:10, h:16}, {x:x+104, y:y+128, w:80, h:128}, {flip:"vertical"}); //Top
+  Generator.drawTexture(texture, {x:28, y:16, w:8,  h:16}, {x:x+184, y:y+128, w:64, h:128}, {flip:"vertical"}); //Right
+  Generator.drawTexture(texture, {x:41, y:16, w:5,  h:16}, {x:x+248, y:y+128, w:40, h:128}, {flip:"vertical"}); //Bottom Right
+}
+//Helmet Function (only for seperate helmet)
+Generator.drawHelmet = function(texture, x, y) {
+  if (!Generator.hasTexture(texture)) { return; }
+  Generator.drawTexture(texture, {x:0,  y:8,  w:8, h:3}, {x:x,     y:y+64,  w:64, h:24}); //Right 1
+  Generator.drawTexture(texture, {x:2,  y:10, w:6, h:5}, {x:x+16,  y:y+80,  w:48, h:40}); //Right 2
+  Generator.drawTexture(texture, {x:8,  y:8,  w:8, h:8}, {x:x+64,  y:y+64,  w:64, h:64}); //Face
+  Generator.drawTexture(texture, {x:16, y:8,  w:8, h:3}, {x:x+128, y:y+64,  w:64, h:24}); //Left 1
+  Generator.drawTexture(texture, {x:16, y:10, w:6, h:5}, {x:x+128, y:y+80,  w:48, h:40}); //Left 2
+  Generator.drawTexture(texture, {x:24, y:8,  w:8, h:3}, {x:x+192, y:y+64,  w:64, h:24}); //Back
+  Generator.drawTexture(texture, {x:8,  y:0,  w:8, h:8}, {x:x+64,  y:y,     w:64, h:64}); //Top
+  Generator.drawTexture(texture, {x:16, y:0,  w:8, h:8}, {x:x+64,  y:y+128, w:64, h:64}); //Bottom
+}
+//Boot Function
+Generator.drawBoot = function(texture, x, y) {
+  if (!Generator.hasTexture(texture)) { return; }
+  Generator.drawTexture(texture, {x:0,  y:26, w:4, h:6}, {x:x,    y:y+32, w:32, h:48}); //Right
+  Generator.drawTexture(texture, {x:4,  y:26, w:4, h:6}, {x:x+32, y:y+32, w:32, h:48}); //Front
+  Generator.drawTexture(texture, {x:8,  y:26, w:4, h:6}, {x:x+64, y:y+32, w:32, h:48}); //Left
+  Generator.drawTexture(texture, {x:12, y:26, w:4, h:6}, {x:x+96, y:y+32, w:32, h:48}); //Back
+  Generator.drawTexture(texture, {x:8,  y:16, w:4, h:4}, {x:x+32, y:y+80, w:32, h:32}); //Bottom
+}
+
+//Ultra Mini Functions
+Generator.drawUltraMiniBody = function(texture, x, y) {
+  if (!Generator.hasTexture(texture)) { return; }
+  Generator.drawTexture(texture, {x:46, y:16, w:8,  h:16}, {x:x,    y:y+8,  w:8, h:12}, {flip:"vertical"}); //Right
+  Generator.drawTexture(texture, {x:36, y:16, w:10, h:16}, {x:x+24, y:y+8,  w:8, h:12}, {flip:"vertical"}); //Top
+  Generator.drawTexture(texture, {x:28, y:16, w:8,  h:16}, {x:x+16, y:y+8,  w:8, h:12}, {flip:"vertical"}); //Left
+  Generator.drawTexture(texture, {x:54, y:16, w:10, h:16}, {x:x+8,  y:y+8,  w:8, h:12}, {flip:"vertical"}); //Bottom
+}
+Generator.drawUltraMiniLegs = function(texture, x, y) {
+  if (!Generator.hasTexture(texture)) { return; }
+  Generator.drawTexture(texture, {x:8,  y:16, w:4,  h:4},  {x:x+24, y:y+8,  w:3, h:3}); //Foot 4
+  Generator.drawTexture(texture, {x:8,  y:16, w:4,  h:4},  {x:x+29, y:y+8,  w:3, h:3}); //Foot 3
+  Generator.drawTexture(texture, {x:8,  y:16, w:4,  h:4},  {x:x+24, y:y+16, w:3, h:3}); //Foot 2
+  Generator.drawTexture(texture, {x:8,  y:16, w:4,  h:4},  {x:x+29, y:y+16, w:3, h:3}); //Foot 1
+}
+Generator.drawUltraMiniEnds = function(texture, x, y) {
+  if (!Generator.hasTexture(texture)) { return; }
+  Generator.drawTexture(texture, {x:8,  y:8,  w:8,  h:8},  {x:x+8,  y:y+20, w:8, h:8});  //Face
+  Generator.drawTexture(texture, {x:17, y:17, w:4,  h:3},  {x:x+10, y:y+24, w:4, h:3});  //Nose
+  Generator.drawTexture(texture, {x:46, y:8,  w:10, h:8},  {x:x+8,  y:y,    w:8, h:8}, {flip:"vertical"}); //Back
+}
+Generator.drawUltraMiniHelmet = function(texture, x, y) {
+  if (!Generator.hasTexture(texture)) { return; }
+  Generator.drawTexture(texture, {x:8,  y:8,  w:8, h:3}, {x:x+8,  y:y+20, w:8, h:3});
+  Generator.drawTexture(texture, {x:10, y:11, w:4, h:1}, {x:x+10, y:y+23, w:4, h:1});
+  //Generator.drawTexture(texture, {x:8, y:8, w:8, h:8}, {x:x+8, y:y+20, w:8, h:8}); //Full Helmet
+}
+
+
+
+
+//Page 1 - Pig
+Generator.usePage("Pig");
+Generator.drawImage("Opaque");
+Generator.drawImage("Background Page 1");
+
+if (fullHead) {
+  Generator.drawImage("Background Page 1 - Full Head");
+  Generator.drawHeadFull(pigTexture, 64, 96);
+}
+else {
+  Generator.drawImage("Background Page 1 - Head");
+  Generator.drawHead(pigTexture, 64, 96);
+}
+
+Generator.drawBody(pigTexture, 56, 328);
+Generator.drawLeg(pigTexture, 392, 128);
+Generator.drawLeg(pigTexture, 392, 312);
+Generator.drawLeg(pigTexture, 392, 496);
+Generator.drawLeg(pigTexture, 240, 608);
+
+//draw the accessories on the pig
+if (useHelmet && !seperateHelmet) { Generator.drawHead(armorTexture, 64, 96);   }
+if (useSaddle && !seperateSaddle) { Generator.drawBody(saddleTexture, 56, 328); }
+if (useBoots && !seperateBoots) {
+  Generator.drawBoot(armorTexture, 392, 128);
+  Generator.drawBoot(armorTexture, 392, 312);
+  Generator.drawBoot(armorTexture, 392, 496);
+  Generator.drawBoot(armorTexture, 240, 608);
+}
+
+Generator.drawUltraMiniBody(pigTexture, 120, 650);
+Generator.drawUltraMiniLegs(armorTexture, 120, 650);
+Generator.drawUltraMiniEnds(pigTexture, 120, 650);
+if (useSaddle) { Generator.drawUltraMiniBody(saddleTexture, 120, 650);  }
+if (useHelmet) { Generator.drawUltraMiniHelmet(armorTexture, 120, 650); }
+if (useBoots)  { Generator.drawUltraMiniLegs(armorTexture, 120, 650);   }
+
+if (flatNose) {
+  Generator.drawNoseFlat(pigTexture, 64, 96);
+}
+else {
+  Generator.drawNose(pigTexture, 248, 288);
+  Generator.drawImage("Labels Page 1 - Nose");
+}
+
+//draw the foregrounds that are dependant on head type
+if (fullHead) {
+  Generator.drawImage("Folds Page 1 - Full Head");
+  Generator.drawImage("Labels Page 1 - Full Head");
+}
+else {
+  Generator.drawImage("Folds Page 1 - Head");
+  Generator.drawImage("Cuts Page 1 - Head");
+  Generator.drawImage("Labels Page 1 - Head");
+}
+Generator.drawImage("Labels Page 1");
+
+
+
+
+
+//Page 2 - Accessories
+if (useSaddle && seperateSaddle || useHelmet && seperateHelmet || useBoots && seperateBoots) { //if page 2 is needed
+  Generator.usePage("Accessories");
+  Generator.drawImage("Opaque");
+  Generator.drawImage("Background Page 2");
+
+  if (useSaddle && seperateSaddle) { Generator.drawSaddle(saddleTexture, 56, 328); }
+  if (useHelmet && seperateHelmet) { Generator.drawHelmet(armorTexture, 64, 96);  }
+  if (useBoots && seperateBoots) {
+    Generator.drawBoot(armorTexture, 392, 128);
+    Generator.drawBoot(armorTexture, 392, 312);
+    Generator.drawBoot(armorTexture, 392, 496);
+    Generator.drawBoot(armorTexture, 240, 608);
+  }
+  
+  Generator.drawImage("Folds Page 2");
+  Generator.drawImage("Labels Page 2");
+}
