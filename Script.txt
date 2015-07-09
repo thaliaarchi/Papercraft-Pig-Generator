@@ -37,12 +37,12 @@ Form Controls:
     - Opaque Background
 */
 
-var pigTexture = "Pig Space Pig";
+var pigTexture = "Pig";
 var saddleTexture = "Saddle";
 var armorTexture = "Armor";
 
 //Boolean settings (these will each need form controls)
-var flatNose = false;
+var flatNose = true;
 var fullHead = false;
 var useSaddle = true;
 var useHelmet = true;
