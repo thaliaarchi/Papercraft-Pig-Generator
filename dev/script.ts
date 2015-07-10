@@ -47,63 +47,44 @@ module Generator {
    * @param location The coordinates to draw the texture at;
    *        syntax: {x:#, y:#}
    */
-  export function drawShape(texture, shape, location) {
+  export function drawShape(texture: string, shape: IShape[], location: ILocation) {
     if (!Generator.hasImage(texture)) {
-      new TypeError('texture does not exist');
+      console.error(`Texture ${texture} does not exist`);
       return;
     }
-    if (shape.constructor !== Array) {
-      if (shape.constructor === Object) {
-        shape = [shape];
+    var x = location.x,
+        y = location.y,
+        tx = location.tx || 0,
+        ty = location.ty || 0;
+    for (var i in shape) {
+      var relativeTexture = {
+        x: tx + shape[i].texture.x,
+        y: ty + shape[i].texture.y,
+        w: shape[i].texture.w,
+        h: shape[i].texture.h
+      };
+      var relativePage = {
+        x: x + shape[i].page.x,
+        y: y + shape[i].page.y,
+        w: shape[i].page.w,
+        h: shape[i].page.h
+      };
+      if (shape[i].transform != null) {
+        Generator.drawImage(texture, relativeTexture, relativePage, shape[i].transform);
       }
       else {
-        new TypeError('shape is not an array or object');
-        return;
-      }
-    }
-    if (!('x' in location && 'y' in location)) {
-      new TypeError('location does not contain coordinates');
-      return;
-    }
-    var x = location.x;
-    var y = location.y;
-    var tx = ('tx' in location ? location.tx : 0);
-    var ty = ('ty' in location ? location.ty : 0);
-    var i;
-    for (i in shape) {
-      if (!('texture' in shape[i] && 'page' in shape[i])) {
-        console.warn(JSON.stringify(shape) + ' is missing texture or shape');
-        continue;
-      }
-      var textureObject = {
-        x:tx+shape[i].texture.x,
-        y:ty+shape[i].texture.y,
-        w:shape[i].texture.w,
-        h:shape[i].texture.h
-      };
-      var pageObject = {
-        x:x+shape[i].page.x,
-        y:y+shape[i].page.y,
-        w:shape[i].page.w,
-        h:shape[i].page.h
-      };
-      if ('transform' in shape[i]) {
-        Generator.drawImage(texture, textureObject, pageObject, shape[i].transform);
-      }
-      else {
-        Generator.drawImage(texture, textureObject, pageObject);
+        Generator.drawImage(texture, relativeTexture, relativePage);
       }
     }
   };
-  
-  export function drawShapes(location, data) {
-    var i;
-    for (i in data) {
+
+  export function drawShapesLayered(location, data) {
+    for (var i in data) {
       var dataLocation;
-      if ('location' in data[i]) {
+      if (data[i].location != null) {
         dataLocation = {
-          x:data[i].location.x + location.x,
-          y:data[i].location.y + location.y
+          x: data[i].location.x + location.x,
+          y: data[i].location.y + location.y
         };
       }
       else {
@@ -111,6 +92,19 @@ module Generator {
       }
       Generator.drawShape(data[i].texture, data[i].shape, dataLocation);
     }
+  }
+
+  export interface ILocation {
+    x: number;
+    y: number;
+    tx?: number;
+    ty?: number;
+  }
+
+  export interface IShape {
+    texture: ISelection;
+    page: ISelection;
+    transform?: ITransform;
   }
 }
 
@@ -306,6 +300,6 @@ Generator.makeTextureInput(armorTexture, 64, 32, [
   'Armor (Space Pig)'
 ]);
 
-Generator.drawShapes({x:0, y:0}, [
+Generator.drawShapesLayered({x:0, y:0}, [
   {texture: pigTexture, shape: shapes.body}
 ]);

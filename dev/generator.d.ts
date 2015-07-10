@@ -7,7 +7,7 @@ declare module Generator {
   export function hasImage(image: string): boolean;
   export function drawImage(image: string): void;
   export function drawImage(image: string, x: number, y: number): void;
-  export function drawImage(image: string, imagePosition: IPosition, drawPosition: IPosition, transform?: ITransform): void;
+  export function drawImage(image: string, imageSelection: ISelection, drawSelection: ISelection, transform?: ITransform): void;
   export function drawText(text: string): void;
   export function drawText(text: string, x: number, y: number, style?: ITextStyle): void;
   export function usePage(name?: string): void;
@@ -48,7 +48,7 @@ declare module Generator {
     choices?: string[];
   }
 
-  export interface IPosition {
+  export interface ISelection {
     /** The horizontal position. */
     x: number;
     /** The vertical position. */
