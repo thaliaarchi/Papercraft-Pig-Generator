@@ -266,7 +266,10 @@ ExtendedGenerator.drawComponents([
   {image: 'pig', shape: 'noseFlat', condition: flatNose, offset: {oy:16}},
   {image: 'armor', shape: 'headAdvanced', condition: advancedHead && attachedHelmet},
   {image: 'armor', shape: 'headStandard', condition: standardHead && attachedHelmet, offset: {oy:16}},
-  {image: 'armor', shape: 'headSimple', condition: simpleHead && attachedHelmet, offset: {oy:16}}
+  {image: 'armor', shape: 'headSimple', condition: simpleHead && attachedHelmet, offset: {oy:16}},
+  {image: 'armor', shape: 'headAdvanced', condition: advancedHead && attachedHelmet && showHelmetOverlay, offset: {ix:32}},
+  {image: 'armor', shape: 'headStandard', condition: standardHead && attachedHelmet && showHelmetOverlay, offset: {oy:16, ix:32}},
+  {image: 'armor', shape: 'headSimple', condition: simpleHead && attachedHelmet && showHelmetOverlay, offset: {oy:16, ix:32}}
 ], {x: 48, y: 96});
 
 // Body
