@@ -28,8 +28,8 @@
 /// <reference path="generator.d.ts" />
 
 module Generator {
-  // Function to help with defining the inputs
-  export function makeTextureInput(texture, width, height, choices) {
+  /** Help with defining the inputs */
+  export function defineTextureInput(texture: string, choices: string[], width: number = 64, height: number = 32) {
     Generator.defineInput(texture, {
       type: 'texture', 
       standardWidth: width, 
@@ -288,15 +288,15 @@ var shapes = {
 
 
 // Define user inputs
-Generator.makeTextureInput(pigTexture, 64, 32, [
-  'Pig (Vanilla)','Pig (Faithful)','Pig (Space Pig)','Tepig (by Audra)','Tepig (by Elpis)'
+Generator.defineTextureInput(pigTexture, [
+  'Pig (Vanilla)', 'Pig (Faithful)', 'Pig (Space Pig)', 'Tepig (by Audra)', 'Tepig (by Elpis)'
 ]);
-Generator.makeTextureInput(saddleTexture, 64, 32, [
-  'Saddle (Vanilla)','Saddle (Faithful)','Saddle (Space Pig)'
+Generator.defineTextureInput(saddleTexture, [
+  'Saddle (Vanilla)', 'Saddle (Faithful)', 'Saddle (Space Pig)'
 ]);
-Generator.makeTextureInput(armorTexture, 64, 32, [
-  'Diamond Armor (Vanilla)','Gold Armor (Vanilla)','Chainmail Armor (Vanilla)','Iron Armor (Vanilla)',
-  'Diamond Armor (Faithful)','Gold Armor (Faithful)','Chainmail Armor (Faithful)','Iron Armor (Faithful)',
+Generator.defineTextureInput(armorTexture, [
+  'Diamond Armor (Vanilla)', 'Gold Armor (Vanilla)', 'Chainmail Armor (Vanilla)', 'Iron Armor (Vanilla)',
+  'Diamond Armor (Faithful)', 'Gold Armor (Faithful)', 'Chainmail Armor (Faithful)', 'Iron Armor (Faithful)',
   'Armor (Space Pig)'
 ]);
 
