@@ -32,8 +32,8 @@
 
 ExtendedGenerator.defineImages({
   pig: 'Pig',
-  saddleTexture: 'Saddle',
-  armorTexture: 'Armor (Layer 1)',
+  saddle: 'Saddle',
+  armor: 'Armor (Layer 1)',
   backgrounds: 'Background Sprite',
   folds: 'Fold Sprite',
   labels: 'Label Sprite',
