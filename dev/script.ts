@@ -20,8 +20,8 @@
 // 25 Feb 2015 TepigMC: Modified images; Fix drawing errors
 // 26 Feb 2015 TepigMC: Removed missing texture checks; Rename files
 // 27 Feb 2015 TepigMC: Compacted backgrounds and folds into sprite files
-// 28 Feb 2015 TepigMC: Compacted labels and titles into sprite files; Added "Advanced (Standard)" head
-//                      Added "Show Helmet Overlay" option; Added texture options
+// 28 Feb 2015 TepigMC: Compacted labels and titles into sprite files; Added 'Advanced (Standard)' head
+//                      Added 'Show Helmet Overlay' option; Added texture options
 //
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -31,7 +31,7 @@ module Generator {
   // Function to help with defining the inputs
   export function makeTextureInput(texture, width, height, choices) {
     Generator.defineInput(texture, {
-      type: "texture", 
+      type: 'texture', 
       standardWidth: width, 
       standardHeight: height,
       choices: choices
@@ -49,7 +49,7 @@ module Generator {
    */
   export function drawShape(texture, shape, location) {
     if (!Generator.hasImage(texture)) {
-      new TypeError("texture does not exist");
+      new TypeError('texture does not exist');
       return;
     }
     if (shape.constructor !== Array) {
@@ -57,22 +57,22 @@ module Generator {
         shape = [shape];
       }
       else {
-        new TypeError("shape is not an array or object");
+        new TypeError('shape is not an array or object');
         return;
       }
     }
-    if (!("x" in location && "y" in location)) {
-      new TypeError("location does not contain coordinates");
+    if (!('x' in location && 'y' in location)) {
+      new TypeError('location does not contain coordinates');
       return;
     }
     var x = location.x;
     var y = location.y;
-    var tx = ("tx" in location ? location.tx : 0);
-    var ty = ("ty" in location ? location.ty : 0);
+    var tx = ('tx' in location ? location.tx : 0);
+    var ty = ('ty' in location ? location.ty : 0);
     var i;
     for (i in shape) {
-      if (!("texture" in shape[i] && "page" in shape[i])) {
-        console.warn(JSON.stringify(shape) + " is missing texture or shape");
+      if (!('texture' in shape[i] && 'page' in shape[i])) {
+        console.warn(JSON.stringify(shape) + ' is missing texture or shape');
         continue;
       }
       var textureObject = {
@@ -87,7 +87,7 @@ module Generator {
         w:shape[i].page.w,
         h:shape[i].page.h
       };
-      if ("transform" in shape[i]) {
+      if ('transform' in shape[i]) {
         Generator.drawImage(texture, textureObject, pageObject, shape[i].transform);
       }
       else {
@@ -100,7 +100,7 @@ module Generator {
     var i;
     for (i in data) {
       var dataLocation;
-      if ("location" in data[i]) {
+      if ('location' in data[i]) {
         dataLocation = {
           x:data[i].location.x + location.x,
           y:data[i].location.y + location.y
@@ -115,13 +115,13 @@ module Generator {
 }
 
 // Input names
-var pigTexture = "Pig";
-var saddleTexture = "Saddle";
-var armorTexture = "Armor (Layer 1)";
-var backgroundSprite = "Background Sprite";
-var foldSprite = "Fold Sprite";
-var labelSprite = "Label Sprite";
-var titleSprite = "Title Sprite";
+var pigTexture = 'Pig';
+var saddleTexture = 'Saddle';
+var armorTexture = 'Armor (Layer 1)';
+var backgroundSprite = 'Background Sprite';
+var foldSprite = 'Fold Sprite';
+var labelSprite = 'Label Sprite';
+var titleSprite = 'Title Sprite';
 
 var backgroundSprites = {
   body: { w:312, h:304, x:0, y:0 },
@@ -214,7 +214,7 @@ var shapes = {
     {texture: {x:16, y:17, w:1, h:3}, page: {x:16, y:32, w:8,  h:24}}, // Right
     {texture: {x:17, y:17, w:4, h:3}, page: {x:24, y:32, w:32, h:24}}, // Center
     {texture: {x:21, y:17, w:1, h:3}, page: {x:56, y:32, w:8,  h:24}}, // Left
-    {texture: {x:10, y:12, w:4, h:3}, page: {x:24, y:0,  w:32, h:24}, transform: {rotate:"vertical"}}, // Back
+    {texture: {x:10, y:12, w:4, h:3}, page: {x:24, y:0,  w:32, h:24}, transform: {rotate:'vertical'}}, // Back
     {texture: {x:17, y:16, w:4, h:1}, page: {x:24, y:24, w:32, h:8}}, // Top
     {texture: {x:21, y:16, w:4, h:1}, page: {x:24, y:56, w:32, h:8}}  // Bottom
   ],
@@ -227,7 +227,7 @@ var shapes = {
     {texture: {x:46, y:16, w:8,  h:16}, page: {x:144, y:88,  w:64, h:128}}, // Left
     {texture: {x:54, y:16, w:10, h:16}, page: {x:208, y:88,  w:80, h:128}}, // Top
     {texture: {x:36, y:8,  w:10, h:8},  page: {x:64,  y:24,  w:80, h:64}}, // Front
-    {texture: {x:46, y:8,  w:10, h:8},  page: {x:64,  y:216, w:80, h:64}, transform: {flip:"vertical"}} // Back
+    {texture: {x:46, y:8,  w:10, h:8},  page: {x:64,  y:216, w:80, h:64}, transform: {flip:'vertical'}} // Back
   ],
   leg: [
     {texture: {x:0,  y:20, w:4, h:6}, page: {x:0,  y:56,  w:32, h:48}}, // Right
@@ -245,11 +245,11 @@ var shapes = {
     {texture: {x:28, y:16, w:8,  h:16}, page: {x:184, y:0,w:64, h:128}}, // Right
     {texture: {x:41, y:16, w:5,  h:16}, page: {x:248, y:0,w:40, h:128}},  // Bottom Right
     // Bottom
-    {texture: {x:41, y:16, w:5,  h:16}, page: {x:0,   y:128, w:40, h:128}, transform: {flip:"vertical"}}, // Bottom Left
-    {texture: {x:46, y:16, w:8,  h:16}, page: {x:40,  y:128, w:64, h:128}, transform: {flip:"vertical"}}, // Left
-    {texture: {x:54, y:16, w:10, h:16}, page: {x:104, y:128, w:80, h:128}, transform: {flip:"vertical"}}, // Top
-    {texture: {x:28, y:16, w:8,  h:16}, page: {x:184, y:128, w:64, h:128}, transform: {flip:"vertical"}}, // Right
-    {texture: {x:41, y:16, w:5,  h:16}, page: {x:248, y:128, w:40, h:128}, transform: {flip:"vertical"}}  // Bottom Right
+    {texture: {x:41, y:16, w:5,  h:16}, page: {x:0,   y:128, w:40, h:128}, transform: {flip:'vertical'}}, // Bottom Left
+    {texture: {x:46, y:16, w:8,  h:16}, page: {x:40,  y:128, w:64, h:128}, transform: {flip:'vertical'}}, // Left
+    {texture: {x:54, y:16, w:10, h:16}, page: {x:104, y:128, w:80, h:128}, transform: {flip:'vertical'}}, // Top
+    {texture: {x:28, y:16, w:8,  h:16}, page: {x:184, y:128, w:64, h:128}, transform: {flip:'vertical'}}, // Right
+    {texture: {x:41, y:16, w:5,  h:16}, page: {x:248, y:128, w:40, h:128}, transform: {flip:'vertical'}}  // Bottom Right
   ],
   helmetSeperate: [
     {texture: {x:0,  y:8,  w:8, h:3}, page: {x:0,   y:64, w:64, h:24}}, // Right 1
@@ -268,10 +268,10 @@ var shapes = {
     {texture: {x:8,  y:16, w:4, h:4}, page: {x:32, y:48, w:32, h:32}}  // Bottom
   ],
   ultraMiniBody: [
-    {texture: {x:46, y:16, w:8,  h:16}, page: {x:0,  y:8, w:8, h:12}, transform: {flip:"vertical"}}, // Right
-    {texture: {x:36, y:16, w:10, h:16}, page: {x:24, y:8, w:8, h:12}, transform: {flip:"vertical"}}, // Top
-    {texture: {x:28, y:16, w:8,  h:16}, page: {x:16, y:8, w:8, h:12}, transform: {flip:"vertical"}}, // Left
-    {texture: {x:54, y:16, w:10, h:16}, page: {x:8,  y:8, w:8, h:12}, transform: {flip:"vertical"}}  // Bottom
+    {texture: {x:46, y:16, w:8,  h:16}, page: {x:0,  y:8, w:8, h:12}, transform: {flip:'vertical'}}, // Right
+    {texture: {x:36, y:16, w:10, h:16}, page: {x:24, y:8, w:8, h:12}, transform: {flip:'vertical'}}, // Top
+    {texture: {x:28, y:16, w:8,  h:16}, page: {x:16, y:8, w:8, h:12}, transform: {flip:'vertical'}}, // Left
+    {texture: {x:54, y:16, w:10, h:16}, page: {x:8,  y:8, w:8, h:12}, transform: {flip:'vertical'}}  // Bottom
   ],
   ultraMiniLegs: [
     {texture: {x:8,  y:16, w:4,  h:4}, page: {x:24, y:8,  w:3, h:3}}, // Foot 4
@@ -282,7 +282,7 @@ var shapes = {
   ultraMiniEnds: [
     {texture: {x:8,  y:8,  w:8,  h:8}, page: {x:8,  y:20, w:8, h:8}}, // Face
     {texture: {x:17, y:17, w:4,  h:3}, page: {x:10, y:24, w:4, h:3}}, // Nose
-    {texture: {x:46, y:8,  w:10, h:8}, page: {x:8,  y:0,  w:8, h:8}, transform: {flip:"vertical"}} // Back
+    {texture: {x:46, y:8,  w:10, h:8}, page: {x:8,  y:0,  w:8, h:8}, transform: {flip:'vertical'}} // Back
   ],
   ultraMiniHelmet: [
     //{texture: {x:8,  y:8,  w:8, h:8}, page: {x:8,  y:20, w:8, h:8}}, // Full Helmet
@@ -295,15 +295,15 @@ var shapes = {
 
 // Define user inputs
 Generator.makeTextureInput(pigTexture, 64, 32, [
-  "Pig (Vanilla)","Pig (Faithful)","Pig (Space Pig)","Tepig (by Audra)","Tepig (by Elpis)"
+  'Pig (Vanilla)','Pig (Faithful)','Pig (Space Pig)','Tepig (by Audra)','Tepig (by Elpis)'
 ]);
 Generator.makeTextureInput(saddleTexture, 64, 32, [
-  "Saddle (Vanilla)","Saddle (Faithful)","Saddle (Space Pig)"
+  'Saddle (Vanilla)','Saddle (Faithful)','Saddle (Space Pig)'
 ]);
 Generator.makeTextureInput(armorTexture, 64, 32, [
-  "Diamond Armor (Vanilla)","Gold Armor (Vanilla)","Chainmail Armor (Vanilla)","Iron Armor (Vanilla)",
-  "Diamond Armor (Faithful)","Gold Armor (Faithful)","Chainmail Armor (Faithful)","Iron Armor (Faithful)",
-  "Armor (Space Pig)"
+  'Diamond Armor (Vanilla)','Gold Armor (Vanilla)','Chainmail Armor (Vanilla)','Iron Armor (Vanilla)',
+  'Diamond Armor (Faithful)','Gold Armor (Faithful)','Chainmail Armor (Faithful)','Iron Armor (Faithful)',
+  'Armor (Space Pig)'
 ]);
 
 Generator.drawShapes({x:0, y:0}, [
