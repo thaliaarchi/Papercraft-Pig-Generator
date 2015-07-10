@@ -5,31 +5,61 @@
  * @author TepigMC http://pixelpapercraft.com/user/tepigmc
  */
 module ExtendedGenerator {
-  export var images: IImageCollection = {};
-  export var components: IComponentCollection = {};
-
-  export function defineImages(images: IImageCollection) {
-    ExtendedGenerator.images = images;
+  module definitions {
+    export var images: IImageCollection = {};
+    export var components: IComponentCollection = {};
+    export var sprites: ISpriteCollection = {};
   }
 
+  export function defineImages(images: IImageCollection) {
+    definitions.images = images;
+  }
+  export function defineImage(name: string, image: string) {
+    definitions.images[name] = image;
+  }
   export function defineComponents(components: IComponentCollection) {
-    ExtendedGenerator.components = components;
+    definitions.components = components;
+  }
+  export function defineComponent(name: string, component: IComponent) {
+    definitions.components[name] = component;
+  }
+  export function defineSprites(sprites: ISpriteCollection) {
+    definitions.sprites = sprites;
+  }
+  export function defineSprite(name: string, sprite: ISprite) {
+    definitions.sprites[name] = sprite;
   }
 
   /** Shortcut for defining an input */
   export function defineInput(type: string, texture: string, choices: string[] = undefined, width: number = 64, height: number = 32) {
-    Generator.defineInput(images[texture], {
+    Generator.defineInput(definitions.images[texture], {
       type: type, 
       standardWidth: width, 
       standardHeight: height,
       choices: choices
     });
-  };
+  }
+
+  export function drawComponentsLayered(position: IPosition, layers: ILayer[]) {
+    for (var layer of layers) {
+      var offsetLocation;
+      if (layer.offset != null) {
+        offsetLocation = {
+          x: layer.offset.x + position.x,
+          y: layer.offset.y + position.y
+        };
+      }
+      else {
+        offsetLocation = location;
+      }
+      drawComponent(layer.image, layer.shape, offsetLocation);
+    }
+  }
 
   /** Shortcut for Generator.drawImage() with relative positioning */
   export function drawComponent(imageName: string, componentName: string, offset: IComponentOffset) {
-    var image = images[imageName],
-        component = components[componentName];
+    var image = definitions.images[imageName],
+        component = definitions.components[componentName];
     if (!Generator.hasImage(image)) {
       console.error(`Image ${image} does not exist`);
       return;
@@ -51,33 +81,24 @@ module ExtendedGenerator {
         w: shape.out.w,
         h: shape.out.h
       };
-      if (shape.transform != null) {
-        Generator.drawImage(image, offsetIn, offsetOut, shape.transform);
-      }
-      else {
-        Generator.drawImage(image, offsetIn, offsetOut);
-      }
+      drawShape(image, shape);
     }
-  };
+  }
 
-  export function drawShapesLayered(position: IPosition, layers: ILayer[]) {
-    for (var layer of layers) {
-      var offsetLocation;
-      if (layer.offset != null) {
-        offsetLocation = {
-          x: layer.offset.x + position.x,
-          y: layer.offset.y + position.y
-        };
-      }
-      else {
-        offsetLocation = location;
-      }
-      drawComponent(layer.image, layer.shape, offsetLocation);
-    }
+  export function drawShape(image: string, shape: IShape) {
+    Generator.drawImage(image, shape.in, shape.out, shape.transform || {});
   }
 
   export interface IImageCollection {
     [name: string]: string;
+  }
+
+  export interface ISpriteCollection {
+    [name: string]: ISprite;
+  }
+
+  export interface ISprite {
+    [name: string]: Generator.ISelection;
   }
 
   export interface IComponentCollection {
