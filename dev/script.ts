@@ -21,109 +21,15 @@
 // 26 Feb 2015 TepigMC: Removed missing texture checks; Rename files
 // 27 Feb 2015 TepigMC: Compacted backgrounds and folds into sprite files
 // 28 Feb 2015 TepigMC: Compacted labels and titles into sprite files; Added 'Advanced (Standard)' head
-//                      Added 'Show Helmet Overlay' option; Added texture options
+//     Added 'Show Helmet Overlay' option; Added texture options
+// 09 Jul 2015 TepigMC: Converting to typescript
 //
 ////////////////////////////////////////////////////////////////////////////////
 
 /// <reference path="generator.d.ts" />
+/// <reference path="extended-generator.ts" />
 
-module Generator {
-  /** Help with defining the inputs */
-  export function defineTextureInput(texture: string, choices: string[], width: number = 64, height: number = 32) {
-    Generator.defineInput(texture, {
-      type: 'texture', 
-      standardWidth: width, 
-      standardHeight: height,
-      choices: choices
-    });
-  };
-  
-  /**
-   * Shortcut for Generator.drawImage() with relative positioning
-   * 
-   * @param {string} texture The name of the texture
-   * @param shape The coordinates and size to get the texture from; transform is optional
-   *        syntax: [{texture: {x:#, y:#, w:#, h:#}, page: {x:#, y:#, w:#, h:#}, transform: {}]
-   * @param location The coordinates to draw the texture at;
-   *        syntax: {x:#, y:#}
-   */
-  export function drawShape(image: string, shapes: IShape[], offset: IShapeOffset) {
-    if (!Generator.hasImage(image)) {
-      console.error(`Image ${image} does not exist`);
-      return;
-    }
-    var ix = offset.ix || 0,
-        iy = offset.iy || 0,
-        ox = offset.ox || 0,
-        oy = offset.oy || 0;
-    for (var shape of shapes) {
-      var offsetIn = {
-        x: ix + shape.in.x,
-        y: iy + shape.in.y,
-        w: shape.in.w,
-        h: shape.in.h
-      };
-      var offsetOut = {
-        x: ox + shape.out.x,
-        y: oy + shape.out.y,
-        w: shape.out.w,
-        h: shape.out.h
-      };
-      if (shape.transform != null) {
-        Generator.drawImage(image, offsetIn, offsetOut, shape.transform);
-      }
-      else {
-        Generator.drawImage(image, offsetIn, offsetOut);
-      }
-    }
-  };
-
-  export function drawShapesLayered(position: IPosition, layers: ILayer[]) {
-    for (var layer of layers) {
-      var dataLocation;
-      if (layer.offset != null) {
-        dataLocation = {
-          x: layer.offset.x + position.x,
-          y: layer.offset.y + position.y
-        };
-      }
-      else {
-        dataLocation = location;
-      }
-      Generator.drawShape(layer.image, layer.shape, dataLocation);
-    }
-  }
-
-  export interface IPosition {
-    x: number;
-    y: number;
-  }
-
-  export interface IShapeOffset {
-    ix?: number;
-    iy?: number;
-    ox?: number;
-    oy?: number;
-  }
-
-  export interface IShape {
-    in: ISelection;
-    out: ISelection;
-    transform?: ITransform;
-  }
-
-  export interface IShapeCollection {
-    [name: string]: IShape[];
-  }
-
-  export interface ILayer {
-    image: string;
-    shape: IShape[];
-    offset?: IPosition;
-  }
-}
-
-var images = {
+ExtendedGenerator.defineImages({
   pig: 'Pig',
   saddleTexture: 'Saddle',
   armorTexture: 'Armor (Layer 1)',
@@ -131,7 +37,7 @@ var images = {
   folds: 'Fold Sprite',
   labels: 'Label Sprite',
   titles: 'Title Sprite'
-};
+});
 
 var backgroundSprites = {
   body: { w:312, h:304, x:0, y:0 },
@@ -189,7 +95,7 @@ var titleSprites = {
 };
 
 
-var shapes: Generator.IShapeCollection = {
+var components: ExtendedGenerator.IComponentCollection = {
   headAdvanced: [
     {in: {x:0,  y:8,  w:8, h:2}, out: {x:0,   y:64,  w:64, h:16}}, // Right 1
     {in: {x:2,  y:10, w:6, h:6}, out: {x:16,  y:80,  w:48, h:48}}, // Right 2
@@ -304,18 +210,18 @@ var shapes: Generator.IShapeCollection = {
 
 
 // Define user inputs
-Generator.defineTextureInput(images['pig'], [
+ExtendedGenerator.defineInput('texture', 'pig', [
   'Pig (Vanilla)', 'Pig (Faithful)', 'Pig (Space Pig)', 'Tepig (by Audra)', 'Tepig (by Elpis)'
 ]);
-Generator.defineTextureInput(images['saddle'], [
+ExtendedGenerator.defineInput('texture', 'saddle', [
   'Saddle (Vanilla)', 'Saddle (Faithful)', 'Saddle (Space Pig)'
 ]);
-Generator.defineTextureInput(images['armor'], [
+ExtendedGenerator.defineInput('texture', 'armor', [
   'Diamond Armor (Vanilla)', 'Gold Armor (Vanilla)', 'Chainmail Armor (Vanilla)', 'Iron Armor (Vanilla)',
   'Diamond Armor (Faithful)', 'Gold Armor (Faithful)', 'Chainmail Armor (Faithful)', 'Iron Armor (Faithful)',
   'Armor (Space Pig)'
 ]);
 
-Generator.drawShapesLayered({x: 0, y: 0}, [
-  {image: images['pig'], shape: shapes['body']}
+ExtendedGenerator.drawShapesLayered({x: 0, y: 0}, [
+  {image: 'pig', shape: 'body'}
 ]);

@@ -1,5 +1,6 @@
 /**
- * The Pixel Papercraft generator module.
+ * The Pixel Papercraft generator module definitions.
+ * @author TepigMC http://pixelpapercraft.com/user/tepigmc
  * http://pixelpapercraft.com/generator-builder
  */
 declare module Generator {
