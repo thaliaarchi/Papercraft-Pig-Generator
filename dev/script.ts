@@ -24,6 +24,7 @@
 //     Added 'Show Helmet Overlay' option; Added texture options
 // 09 Mar 2015 TepigMC: Fixed bug with ultra mini pig where it used the armor texture for legs
 // 09 Jul 2015 TepigMC: Converting to typescript; Created ExtendedGenerator; Lots of refactoring
+// 10 Jul 2015 TepigMC: Major improvements to ExtendedGenerator
 //
 ////////////////////////////////////////////////////////////////////////////////
 
