@@ -22,7 +22,8 @@
 // 27 Feb 2015 TepigMC: Compacted backgrounds and folds into sprite files
 // 28 Feb 2015 TepigMC: Compacted labels and titles into sprite files; Added 'Advanced (Standard)' head
 //     Added 'Show Helmet Overlay' option; Added texture options
-// 09 Jul 2015 TepigMC: Converting to typescript
+// 09 Mar 2015 TepigMC: Fixed bug with ultra mini pig where it used the armor texture for legs
+// 09 Jul 2015 TepigMC: Converting to typescript; Created ExtendedGenerator; Lots of refactoring
 //
 ////////////////////////////////////////////////////////////////////////////////
 
