@@ -88,13 +88,18 @@ module ExtendedGenerator {
     if (component.condition === false) {
       return;
     }
-    var image = definitions.images[component.image],
-        shape = definitions.shapes[component.shape],
-        offset = component.offset;
+    var image = definitions.images[component.image];
     if (!Generator.hasImage(image)) {
       console.error(`Image ${image} does not exist. drawComponent(${JSON.stringify(component)})`);
       return;
     }
+    if (component.shape != null) {
+      drawShape(image, component.shape, component.offset);
+    }
+  }
+
+  export function drawShape(image: string, name: string, offset: IOffset) {
+    var shape = definitions.shapes[name];
     if (offset != null) {
       var ix = offset.ix || 0, iy = offset.iy || 0,
           ox = offset.ox || 0, oy = offset.oy || 0;
@@ -140,7 +145,7 @@ module ExtendedGenerator {
   export interface IComponent {
     image: string;
     shape: string;
-    offset?: IShapeOffset;
+    offset?: IOffset;
     condition?: boolean;
   }
 
@@ -150,7 +155,7 @@ module ExtendedGenerator {
 
   export interface IShape extends Array<ISide> { }
 
-  export interface IShapeOffset {
+  export interface IOffset {
     ix?: number;
     iy?: number;
     ox?: number;

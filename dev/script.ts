@@ -238,6 +238,7 @@ var noseStyle = Generator.defineSelectVariable('Nose Style', ['Flat', '3D']),
 // Visibility variables
 var showSaddle = saddleStyle !== 'None',
     showHelmet = helmetStyle !== 'None',
+    showHelmetOverlay = (showHelmetOverlay ? showHelmet : false),
     showBoots = bootsStyle !== 'None';
 
 // Config Variables
@@ -259,18 +260,30 @@ Generator.usePage('Pig');
 // draw credits
 
 // Head
-ExtendedGenerator.drawComponents([
-  {image: 'pig', shape: 'headAdvanced', condition: advancedHead},
-  {image: 'pig', shape: 'headStandard', condition: standardHead, offset: {oy:16}},
-  {image: 'pig', shape: 'headSimple', condition: simpleHead, offset: {oy:16}},
-  {image: 'pig', shape: 'noseFlat', condition: flatNose, offset: {oy:16}},
-  {image: 'armor', shape: 'headAdvanced', condition: advancedHead && attachedHelmet},
-  {image: 'armor', shape: 'headStandard', condition: standardHead && attachedHelmet, offset: {oy:16}},
-  {image: 'armor', shape: 'headSimple', condition: simpleHead && attachedHelmet, offset: {oy:16}},
-  {image: 'armor', shape: 'headAdvanced', condition: advancedHead && attachedHelmet && showHelmetOverlay, offset: {ix:32}},
-  {image: 'armor', shape: 'headStandard', condition: standardHead && attachedHelmet && showHelmetOverlay, offset: {oy:16, ix:32}},
-  {image: 'armor', shape: 'headSimple', condition: simpleHead && attachedHelmet && showHelmetOverlay, offset: {oy:16, ix:32}}
-], {x: 48, y: 96});
+if (advancedHead) {
+  ExtendedGenerator.drawComponents([
+    {image: 'pig', shape: 'headAdvanced'},
+    {image: 'pig', shape: 'noseFlat', condition: flatNose, offset: {oy:16}},
+    {image: 'armor', shape: 'headAdvanced', condition: attachedHelmet},
+    {image: 'armor', shape: 'headAdvanced', condition: attachedHelmet && showHelmetOverlay, offset: {ix:32}},
+  ], {x: 64, y: 96});
+}
+else if (simpleHead) {
+  ExtendedGenerator.drawComponents([
+    {image: 'pig', shape: 'headSimple', offset: {oy:16}},
+    {image: 'pig', shape: 'noseFlat', condition: flatNose, offset: {oy:16}},
+    {image: 'armor', shape: 'headSimple', condition: attachedHelmet, offset: {oy:16}},
+    {image: 'armor', shape: 'headSimple', condition: attachedHelmet && showHelmetOverlay, offset: {oy:16, ix:32}}
+  ], {x: 64, y: 80});
+}
+else {
+  ExtendedGenerator.drawComponents([
+    {image: 'pig', shape: 'headStandard', offset: {oy:16}},
+    {image: 'pig', shape: 'noseFlat', condition: flatNose, offset: {oy:16}},
+    {image: 'armor', shape: 'headStandard', condition: attachedHelmet, offset: {oy:16}},
+    {image: 'armor', shape: 'headStandard', condition: attachedHelmet && showHelmetOverlay, offset: {oy:16, ix:32}},
+  ], {x: 64, y: 80});
+}
 
 // Body
 /*ExtendedGenerator.drawComponents([
