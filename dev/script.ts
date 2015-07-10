@@ -54,16 +54,16 @@ var backgrounds = {
 };
 
 var folds = {
-  body: {w:312, h:304, x:0, y:0},
-  boot: {w:152, h:104, x:448, y:448},
   headAdvanced: {w:296, h:176, x:0, y:632},
   headAdvancedCuts: {w:296, h:176, x:304, y:632},
   headSimple: {w:280, h:192, x:320, y:256},
   headStandardAdvanced: {w:280, h:200, x:0, y:304},
-  helmet: {w:280, h:128, x:0, y:504},
-  leg: {w:152, h:160, x:280, y:448},
   nose3D: {w:80, h:80, x:432, y:552},
-  saddle: {w:288, h:256, x:312, y:0}
+  body: {w:312, h:304, x:0, y:0},
+  boot: {w:152, h:104, x:448, y:448},
+  saddle: {w:288, h:256, x:312, y:0},
+  helmet: {w:280, h:128, x:0, y:504},
+  leg: {w:152, h:160, x:280, y:448}
 };
 
 var labels = {
@@ -79,7 +79,7 @@ var labels = {
   leg1:       {w:32, h:32, x:0, y:48},
   leg2:       {w:32, h:32, x:32, y:48},
   leg3:       {w:32, h:32, x:64, y:48},
-  leg4:       {w:32, h:32, x:96, y:48},
+  leg4:       {w:32, h:32, x:96, y:48}
 };
 
 var titles = {
