@@ -25,6 +25,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+/// <reference path="generator.d.ts" />
+
 module Generator {
   // Function to help with defining the inputs
   export function makeTextureInput(texture, width, height, choices) {
