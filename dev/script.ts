@@ -223,5 +223,5 @@ ExtendedGenerator.defineInput('texture', 'armor', [
 
 ExtendedGenerator.drawComponents([
   {image: 'pig', shape: 'body'},
-  {image: 'saddle', shape: 'body'}
+  {image: 'saddle', shape: 'body', condition: false }
 ], {x: 0, y: 0});

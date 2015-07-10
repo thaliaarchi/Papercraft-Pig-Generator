@@ -60,11 +60,20 @@ module ExtendedGenerator {
 
   export function drawComponents(components: IComponent[], position: IPosition) {
     if (position != null) {
-       for (var component of components) {
+      for (var component of components) {
+        if (component.offset == null) {
+          component.offset = {};
+        }
         drawComponent({
           image: component.image,
           shape: component.shape,
-          offset: component.offset
+          offset: {
+            ix: component.offset.ix || 0,
+            iy: component.offset.iy || 0,
+            ox: (component.offset.ox || 0) + (position.x || 0),
+            oy: (component.offset.oy || 0) + (position.y || 0)
+          },
+          condition: component.condition
         });
       }
     }
@@ -76,6 +85,9 @@ module ExtendedGenerator {
   }
 
   export function drawComponent(component: IComponent) {
+    if (component.condition === false) {
+      return;
+    }
     var image = definitions.images[component.image],
         shape = definitions.shapes[component.shape],
         offset = component.offset;
@@ -128,14 +140,8 @@ module ExtendedGenerator {
   export interface IComponent {
     image: string;
     shape: string;
-    offset?: IComponentOffset;
-  }
-
-  export interface IComponentOffset {
-    ix?: number;
-    iy?: number;
-    ox?: number;
-    oy?: number;
+    offset?: IShapeOffset;
+    condition?: boolean;
   }
 
   export interface IShapeCollection {
@@ -143,6 +149,13 @@ module ExtendedGenerator {
   }
 
   export interface IShape extends Array<ISide> { }
+
+  export interface IShapeOffset {
+    ix?: number;
+    iy?: number;
+    ox?: number;
+    oy?: number;
+  }
 
   export interface ISide {
     in: Generator.ISelection;
