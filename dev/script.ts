@@ -42,55 +42,55 @@ ExtendedGenerator.defineImages({
 });
 
 ExtendedGenerator.defineSprites({
-  backgrounds: {
-    body:         {w:312, h:304, x:0, y:0},
-    boot:         {w:152, h:104, x:280, y:504},
-    headAdvanced: {w:296, h:176, x:0, y:304},
+  background: {
+    headAdvanced: {w:296, h:176, x:0,   y:304},
+    headStandard: {w:280, h:200, x:312, y:0},
     headSimple:   {w:280, h:192, x:312, y:200},
-    headStandardAdvanced: {w:280, h:200, x:312, y:0},
-    helmet:       {w:280, h:128, x:0, y:480},
+    body:         {w:312, h:304, x:0,   y:0},
+    boot:         {w:152, h:104, x:280, y:504},
+    helmet:       {w:280, h:128, x:0,   y:480},
     leg:          {w:152, h:160, x:440, y:392},
-    nose3D:       {w:80, h:80, x:296, y:392},
-    opaque:       {w:32, h:32, x:296, y:472},
-    ultraMini:    {w:36, h:28, x:328, y:472}
+    nose3D:       {w:80,  h:80,  x:296, y:392},
+    opaque:       {w:32,  h:32,  x:296, y:472},
+    ultraMini:    {w:36,  h:28,  x:328, y:472}
   },
-  folds: {
-    headAdvanced: {w:296, h:176, x:0, y:632},
+  fold: {
+    headAdvanced:     {w:296, h:176, x:0,   y:632},
     headAdvancedCuts: {w:296, h:176, x:304, y:632},
-    headSimple:   {w:280, h:192, x:320, y:256},
-    headStandardAdvanced: {w:280, h:200, x:0, y:304},
-    nose3D:       {w:80, h:80, x:432, y:552},
-    body:         {w:312, h:304, x:0, y:0},
-    boot:         {w:152, h:104, x:448, y:448},
-    saddle:       {w:288, h:256, x:312, y:0},
-    helmet:       {w:280, h:128, x:0, y:504},
-    leg:          {w:152, h:160, x:280, y:448}
+    headStandard:     {w:280, h:200, x:0,   y:304},
+    headSimple:       {w:280, h:192, x:320, y:256},
+    nose3D:           {w:80, h:80,   x:432, y:552},
+    body:             {w:312, h:304, x:0,   y:0},
+    boot:             {w:152, h:104, x:448, y:448},
+    saddle:           {w:288, h:256, x:312, y:0},
+    helmet:           {w:280, h:128, x:0,   y:504},
+    leg:              {w:152, h:160, x:280, y:448}
   },
-  labels: {
-    head:       {w:64, h:48, x:64, y:0},
-    headAdvancedStandard: {w:16, h:48, x:192, y:0},
-    headNose3D: {w:32, h:24, x:128, y:56},
-    nose3D:     {w:32, h:24, x:160, y:56},
-    bodyHead:   {w:64, h:48, x:0, y:0},
-    bodyLeg1:   {w:32, h:32, x:128, y:0},
-    bodyLeg2:   {w:32, h:32, x:160, y:0},
-    bodyLeg3:   {w:32, h:24, x:128, y:32},
-    bodyLeg4:   {w:32, h:24, x:160, y:32},
-    leg1:       {w:32, h:32, x:0, y:48},
-    leg2:       {w:32, h:32, x:32, y:48},
-    leg3:       {w:32, h:32, x:64, y:48},
-    leg4:       {w:32, h:32, x:96, y:48}
+  label: {
+    head:         {w:64, h:48, x:64,  y:0},
+    headStandard: {w:16, h:48, x:192, y:0},
+    headNose3D:   {w:32, h:24, x:128, y:56},
+    nose3D:       {w:32, h:24, x:160, y:56},
+    bodyHead:     {w:64, h:48, x:0,   y:0},
+    bodyLeg1:     {w:32, h:32, x:128, y:0},
+    bodyLeg2:     {w:32, h:32, x:160, y:0},
+    bodyLeg3:     {w:32, h:24, x:128, y:32},
+    bodyLeg4:     {w:32, h:24, x:160, y:32},
+    leg1:         {w:32, h:32, x:0,   y:48},
+    leg2:         {w:32, h:32, x:32,  y:48},
+    leg3:         {w:32, h:32, x:64,  y:48},
+    leg4:         {w:32, h:32, x:96,  y:48}
   },
-  titles: {
-    head:      {w:46,  h:14, x:138, y:0},
-    nose3D:    {w:46,  h:14, x:244, y:0},
-    body:      {w:46,  h:16, x:34,  y:30},
-    leg:       {w:34,  h:16, x:0,   y:23},
-    saddle:    {w:64,  h:14, x:74,  y:0},
-    helmet:    {w:60,  h:14, x:184, y:0},
-    boot:      {w:42,  h:14, x:44,  y:16},
-    ultraMini: {w:44,  h:7,  x:0,   y:16},
-    tepigmc:   {w:74,  h:16, x:0,   y:0},
+  title: {
+    head:            {w:46,  h:14, x:138, y:0},
+    nose3D:          {w:46,  h:14, x:244, y:0},
+    body:            {w:46,  h:16, x:34,  y:30},
+    leg:             {w:34,  h:16, x:0,   y:23},
+    saddle:          {w:64,  h:14, x:74,  y:0},
+    helmet:          {w:60,  h:14, x:184, y:0},
+    boot:            {w:42,  h:14, x:44,  y:16},
+    ultraMini:       {w:44,  h:7,  x:0,   y:16},
+    tepigmc:         {w:74,  h:16, x:0,   y:0},
     pixelPapercraft: {w:208, h:34, x:86,  y:14}
   }
 });
@@ -108,7 +108,7 @@ ExtendedGenerator.defineComponents({
     {in: {x:24, y:10, w:8, h:6}, out: {x:176, y:80,  w:64, h:48}}, // Back 2
     {in: {x:24, y:10, w:8, h:2}, out: {x:0,   y:144, w:64, h:16}, transform: {rotate:270}} // Back 3
   ],
-  headStandardAdvanced: [
+  headStandard: [
     {in: {x:0,  y:8,  w:8, h:2}, out: {x:0,   y:64,  w:64, h:16}}, // Right 1
     {in: {x:2,  y:10, w:6, h:6}, out: {x:16,  y:80,  w:48, h:48}}, // Right 2
     {in: {x:8,  y:8,  w:8, h:8}, out: {x:64,  y:64,  w:64, h:64}}, // Face
@@ -153,7 +153,7 @@ ExtendedGenerator.defineComponents({
     {in: {x:4,  y:16, w:4, h:4}, out: {x:32, y:24,  w:32, h:32}}, // Top
     {in: {x:8,  y:16, w:4, h:4}, out: {x:32, y:104, w:32, h:32}}  // Bottom
   ],
-  saddle: [
+  saddleSeperate: [
     // Top
     {in: {x:41, y:16, w:5,  h:16}, out: {x:0,   y:0,w:40, h:128}}, // Bottom Left
     {in: {x:46, y:16, w:8,  h:16}, out: {x:40,  y:0,w:64, h:128}}, // Left
@@ -221,6 +221,7 @@ ExtendedGenerator.defineInput('texture', 'armor', [
   'Armor (Space Pig)'
 ]);
 
-ExtendedGenerator.drawComponentsLayered({x: 0, y: 0}, [
-  {image: 'pig', shape: 'body'}
-]);
+ExtendedGenerator.drawComponents([
+  {image: 'pig', shape: 'body'},
+  {image: 'saddle', shape: 'body'}
+], {x: 0, y: 0});

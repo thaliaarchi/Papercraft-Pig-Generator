@@ -7,7 +7,7 @@
 module ExtendedGenerator {
   module definitions {
     export var images: IImageCollection = {};
-    export var components: IComponentCollection = {};
+    export var shapes: IShapeCollection = {};
     export var sprites: ISpriteCollection = {};
   }
 
@@ -17,11 +17,11 @@ module ExtendedGenerator {
   export function defineImage(name: string, image: string): void {
     definitions.images[name] = image;
   }
-  export function defineComponents(components: IComponentCollection): void {
-    definitions.components = components;
+  export function defineComponents(shapes: IShapeCollection): void {
+    definitions.shapes = shapes;
   }
-  export function defineComponent(name: string, component: IComponent): void {
-    definitions.components[name] = component;
+  export function defineComponent(name: string, shape: IShape): void {
+    definitions.shapes[name] = shape;
   }
   export function defineSprites(sprites: ISpriteCollection): void {
     definitions.sprites = sprites;
@@ -35,11 +35,11 @@ module ExtendedGenerator {
   export function getImage(name: string): string {
     return definitions.images[name];
   }
-  export function getComponents(): IComponentCollection {
-    return definitions.components;
+  export function getComponents(): IShapeCollection {
+    return definitions.shapes;
   }
-  export function getComponent(name: string): IComponent {
-    return definitions.components[name];
+  export function getComponent(name: string): IShape {
+    return definitions.shapes[name];
   }
   export function getSprites(): ISpriteCollection {
     return definitions.sprites;
@@ -58,57 +58,59 @@ module ExtendedGenerator {
     });
   }
 
-  export function drawComponentsLayered(position: IPosition, layers: ILayer[]) {
-    for (var layer of layers) {
-      var offsetLocation;
-      if (layer.offset != null) {
-        offsetLocation = {
-          x: layer.offset.x + position.x,
-          y: layer.offset.y + position.y
-        };
+  export function drawComponents(components: IComponent[], position: IPosition) {
+    if (position != null) {
+       for (var component of components) {
+        drawComponent({
+          image: component.image,
+          shape: component.shape,
+          offset: component.offset
+        });
       }
-      else {
-        offsetLocation = location;
+    }
+    else {
+      for (var component of components) {
+        drawComponent(component);
       }
-      drawComponent(layer.image, layer.shape, offsetLocation);
     }
   }
 
-  export function drawComponent(imageName: string, componentName: string, offset?: IComponentOffset) {
-    var image = definitions.images[imageName],
-        component = definitions.components[componentName];
+  export function drawComponent(component: IComponent) {
+    var image = definitions.images[component.image],
+        shape = definitions.shapes[component.shape],
+        offset = component.offset;
     if (!Generator.hasImage(image)) {
-      console.error(`Image ${image} does not exist`);
+      console.error(`Image ${image} does not exist. drawComponent(${JSON.stringify(component)})`);
       return;
     }
     if (offset != null) {
       var ix = offset.ix || 0, iy = offset.iy || 0,
           ox = offset.ox || 0, oy = offset.oy || 0;
-      for (var shape of component) {
+      for (var side of shape) {
         var offsetIn = {
-          x: ix + shape.in.x,
-          y: iy + shape.in.y,
-          w: shape.in.w,
-          h: shape.in.h
+          x: ix + side.in.x,
+          y: iy + side.in.y,
+          w: side.in.w,
+          h: side.in.h
         };
         var offsetOut = {
-          x: ox + shape.out.x,
-          y: oy + shape.out.y,
-          w: shape.out.w,
-          h: shape.out.h
+          x: ox + side.out.x,
+          y: oy + side.out.y,
+          w: side.out.w,
+          h: side.out.h
         };
-        Generator.drawImage(image, offsetIn, offsetOut, shape.transform || {});
+        Generator.drawImage(image, offsetIn, offsetOut, side.transform || {});
       }
     }
     else {
-      for (var shape of component) {
-        drawShape(image, shape);
+      for (var side of shape) {
+        drawSide(image, side);
       }
     }
   }
 
-  export function drawShape(image: string, shape: IShape) {
-    Generator.drawImage(image, shape.in, shape.out, shape.transform || {});
+  export function drawSide(image: string, side: ISide) {
+    Generator.drawImage(image, side.in, side.out, side.transform || {});
   }
 
   export interface IImageCollection {
@@ -123,11 +125,11 @@ module ExtendedGenerator {
     [name: string]: Generator.ISelection;
   }
 
-  export interface IComponentCollection {
-    [name: string]: IComponent;
+  export interface IComponent {
+    image: string;
+    shape: string;
+    offset?: IComponentOffset;
   }
-
-  export interface IComponent extends Array<IShape> { }
 
   export interface IComponentOffset {
     ix?: number;
@@ -136,7 +138,13 @@ module ExtendedGenerator {
     oy?: number;
   }
 
-  export interface IShape {
+  export interface IShapeCollection {
+    [name: string]: IShape;
+  }
+
+  export interface IShape extends Array<ISide> { }
+
+  export interface ISide {
     in: Generator.ISelection;
     out: Generator.ISelection;
     transform?: Generator.ITransform;
@@ -145,11 +153,5 @@ module ExtendedGenerator {
   export interface IPosition {
     x: number;
     y: number;
-  }
-
-  export interface ILayer {
-    image: string;
-    shape: string;
-    offset?: IPosition;
   }
 }
