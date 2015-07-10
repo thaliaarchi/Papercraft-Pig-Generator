@@ -1,8 +1,8 @@
 # MINECRAFT PIG PAPERCRAFT GENERATOR
 Created by [TepigMC](http://pixelpapercraft.com/user/tepigmc) | View project on [GitHub](https://github.com/TepigMC/Papercraft-Pig-Generator)
 
-![Pig wearing accessories](images/minecraft-pig-advanced_thumb.jpg)
-![Pig with seperate accessories](images/minecraft-pig-advanced-2_thumb.jpg)
+![Pig wearing accessories](photos/minecraft-pig-advanced_thumb.jpg)
+![Pig with seperate accessories](photos/minecraft-pig-advanced-2_thumb.jpg)
 
 ## Features
 This generator creates a pig papercraft with many optional customizations including:
@@ -48,3 +48,5 @@ and Checking 'Fit picture to frame' for the accessories page.
   - [lostminer](http://pixelpapercraft.com/user/lostminer) for upgrading Pixel Papercraft's
     generator engine to support the customization needed in this generator.
   - [Maki](http://pixelpapercraft.com/user/maki) for the awesome [Ultra Mini Pig](http://pixelpapercraft.com/papercraft/5221a6deeee0218e38000040/ultra-mini-miny-pigy) idea.
+  - [Mojang](https://mojang.com/) for creating Minecraft.
+  - Vattic, jimPIG, Audra, and Elpis for the included textures.
