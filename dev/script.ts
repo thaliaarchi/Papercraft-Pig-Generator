@@ -261,11 +261,12 @@ Generator.usePage('Pig');
 // Head
 ExtendedGenerator.drawComponents([
   {image: 'pig', shape: 'headAdvanced', condition: advancedHead},
-  {image: 'pig', shape: 'headStandard', condition: standardHead},
-  {image: 'pig', shape: 'headSimple', condition: simpleHead},
+  {image: 'pig', shape: 'headStandard', condition: standardHead, offset: {oy:16}},
+  {image: 'pig', shape: 'headSimple', condition: simpleHead, offset: {oy:16}},
+  {image: 'pig', shape: 'noseFlat', condition: flatNose, offset: {oy:16}},
   {image: 'armor', shape: 'headAdvanced', condition: advancedHead && attachedHelmet},
-  {image: 'armor', shape: 'headStandard', condition: standardHead && attachedHelmet},
-  {image: 'armor', shape: 'headSimple', condition: simpleHead && attachedHelmet}
+  {image: 'armor', shape: 'headStandard', condition: standardHead && attachedHelmet, offset: {oy:16}},
+  {image: 'armor', shape: 'headSimple', condition: simpleHead && attachedHelmet, offset: {oy:16}}
 ], {x: 48, y: 96});
 
 // Body
