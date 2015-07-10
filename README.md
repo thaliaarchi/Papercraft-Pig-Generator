@@ -1,8 +1,8 @@
 # MINECRAFT PIG PAPERCRAFT GENERATOR
 *Created by [TepigMC](http://pixelpapercraft.com/user/tepigmc)* | View project on [GitHub](https://github.com/TepigMC/Papercraft-Pig-Generator)
 
-![Pig wearing accessories](thumbnails/assembled_web.jpg)
-![Pig with seperate accessories](thumbnails/assembled_2_web.jpg)
+![Pig wearing accessories](images/minecraft-pig-advanced_thumb.jpg)
+![Pig with seperate accessories](images/minecraft-pig-advanced-2_thumb.jpg)
 
 ## Description
 This generator creates a pig papercraft with an optional saddle, helmet, and boots that can be removable.
