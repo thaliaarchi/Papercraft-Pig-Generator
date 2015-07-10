@@ -20,7 +20,7 @@ declare module Generator {
    * The first argument is the name of the variable.
    * The second argument is the inital value of the variable. It must be either true or false
    */
-  export function defineBooleanVariable(name: string, initialValue: string): boolean;
+  export function defineBooleanVariable(name: string, initialValue: boolean): boolean;
   /**
    * This will create two variables that will appear as sliders on most browsers (in older browsers it will be an input box).
    * The first argument is the name of the variable.

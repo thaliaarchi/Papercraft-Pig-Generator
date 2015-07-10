@@ -122,7 +122,7 @@ ExtendedGenerator.defineComponents({
     {in: {x:0,  y:8, w:8, h:8}, out: {x:0,   y:64,  w:64, h:64}}, // Right
     {in: {x:8,  y:8, w:8, h:8}, out: {x:64,  y:64,  w:64, h:64}}, // Face
     {in: {x:16, y:8, w:8, h:8}, out: {x:128, y:64,  w:64, h:64}}, // Left
-    {in: {x:24, y:8, w:8, h:8}, out: {x:256, y:64,  w:64, h:64}}, // Back
+    {in: {x:24, y:8, w:8, h:8}, out: {x:192, y:64,  w:64, h:64}}, // Back
     {in: {x:8,  y:0, w:8, h:8}, out: {x:64,  y:0,   w:64, h:64}}, // Top
     {in: {x:16, y:0, w:8, h:8}, out: {x:64,  y:128, w:64, h:64}}  // Bottom
   ],
@@ -221,7 +221,55 @@ ExtendedGenerator.defineInput('texture', 'armor', [
   'Armor (Space Pig)'
 ]);
 
+// Layer user variables
+var showFolds = Generator.defineBooleanVariable('Show Folds', true),
+    showLabels = Generator.defineBooleanVariable('Show Labels', true),
+    showTitles = Generator.defineBooleanVariable('Show Titles', true),
+    showHelmetOverlay = Generator.defineBooleanVariable('Show Helmet Overlay', true),
+    isTransparent =  Generator.defineBooleanVariable('Transparent Background', true);
+
+// Texture user variables
+var noseStyle = Generator.defineSelectVariable('Nose Style', ['Flat', '3D']),
+    headStyle = Generator.defineSelectVariable('Head Style', ['Simple', 'Standard', 'Advanced']),
+    saddleStyle = Generator.defineSelectVariable('Saddle Style', ['None', 'Attached', 'Seperate']),
+    helmetStyle = Generator.defineSelectVariable('Helmet Style', ['None', 'Attached', 'Seperate']),
+    bootsStyle = Generator.defineSelectVariable('Boots Style', ['None', 'Attached', 'Seperate']);
+
+// Visibility variables
+var showSaddle = saddleStyle !== 'None',
+    showHelmet = helmetStyle !== 'None',
+    showBoots = bootsStyle !== 'None';
+
+// Config Variables
+var advancedHead = headStyle === 'Advanced',
+    standardHead = headStyle === 'Standard',
+    simpleHead = headStyle === 'Simple',
+    flatNose = noseStyle === 'Flat',
+    seperateSaddle = saddleStyle === 'Seperate',
+    seperateHelmet = helmetStyle === 'Seperate',
+    seperateBoots = bootsStyle === 'Seperate',
+    attachedSaddle = saddleStyle === 'Attached',
+    attachedHelmet = helmetStyle === 'Attached',
+    attachedBoots = bootsStyle === 'Attached';
+
+
+///// PAGE 1 - Pig /////
+Generator.usePage('Pig');
+// draw opaque
+// draw credits
+
+// Head
 ExtendedGenerator.drawComponents([
+  {image: 'pig', shape: 'headAdvanced', condition: advancedHead},
+  {image: 'pig', shape: 'headStandard', condition: standardHead},
+  {image: 'pig', shape: 'headSimple', condition: simpleHead},
+  {image: 'armor', shape: 'headAdvanced', condition: advancedHead && attachedHelmet},
+  {image: 'armor', shape: 'headStandard', condition: standardHead && attachedHelmet},
+  {image: 'armor', shape: 'headSimple', condition: simpleHead && attachedHelmet}
+], {x: 48, y: 96});
+
+// Body
+/*ExtendedGenerator.drawComponents([
   {image: 'pig', shape: 'body'},
-  {image: 'saddle', shape: 'body', condition: false }
-], {x: 0, y: 0});
+  {image: 'saddle', shape: 'body', condition: attachedSaddle}
+], {x: 0, y: 0});*/
