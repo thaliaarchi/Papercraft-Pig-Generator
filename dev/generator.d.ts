@@ -4,7 +4,7 @@
  * http://pixelpapercraft.com/generator-builder
  */
 declare module Generator {
-  export function defineInput(name: string, type: IInputType): void;
+  export function defineInput(name: string, options: IInputOptions): void;
   export function hasImage(image: string): boolean;
   export function drawImage(image: string): void;
   export function drawImage(image: string, x: number, y: number): void;
@@ -38,7 +38,7 @@ declare module Generator {
    */
   export function defineSelectVariable(name: string, options: string[]): string;
 
-  export interface IInputType {
+  export interface IInputOptions {
     /** The type of texture to be accepted; can be 'minecraft-character-texture' or 'texture'. */
     type: string;
     /** The standard width of the texture file. */

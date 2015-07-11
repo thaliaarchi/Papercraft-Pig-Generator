@@ -17,10 +17,10 @@ module ExtendedGenerator {
   export function defineImage(name: string, image: string): void {
     definitions.images[name] = image;
   }
-  export function defineComponents(shapes: IShapeCollection): void {
+  export function defineShapes(shapes: IShapeCollection): void {
     definitions.shapes = shapes;
   }
-  export function defineComponent(name: string, shape: IShape): void {
+  export function defineShape(name: string, shape: IShape): void {
     definitions.shapes[name] = shape;
   }
   export function defineSprites(sprites: ISpriteCollection): void {
@@ -35,10 +35,10 @@ module ExtendedGenerator {
   export function getImage(name: string): string {
     return definitions.images[name];
   }
-  export function getComponents(): IShapeCollection {
+  export function getShapes(): IShapeCollection {
     return definitions.shapes;
   }
-  export function getComponent(name: string): IShape {
+  export function getShape(name: string): IShape {
     return definitions.shapes[name];
   }
   export function getSprites(): ISpriteCollection {
@@ -48,14 +48,13 @@ module ExtendedGenerator {
     return definitions.sprites[name];
   }
 
-  /** Shortcut for defining an input */
-  export function defineInput(type: string, texture: string, choices: string[] = undefined, width: number = 64, height: number = 32) {
-    Generator.defineInput(definitions.images[texture], {
-      type: type, 
-      standardWidth: width, 
-      standardHeight: height,
-      choices: choices
-    });
+  /** Shortcut for defining an input. When type is 'texture', the width and height default is 64 and 32 */
+  export function defineInput(imageName: string, options: Generator.IInputOptions) {
+    if (options.type === 'texture') {
+      if (options.standardWidth == null)  { options.standardWidth = 64; }
+      if (options.standardHeight == null) { options.standardHeight = 32; }
+    }
+    Generator.defineInput(getImage(imageName), options);
   }
 
   export function drawComponents(components: IComponent[], position: IPosition) {
@@ -85,21 +84,17 @@ module ExtendedGenerator {
   }
 
   export function drawComponent(component: IComponent) {
-    if (component.condition === false) {
+    if (!hasImage(component.image) || component.condition === false) {
       return;
     }
-    var image = definitions.images[component.image];
-    if (!Generator.hasImage(image)) {
-      console.error(`Image ${image} does not exist. drawComponent(${JSON.stringify(component)})`);
-      return;
-    }
-    if (component.shape != null) {
-      drawShape(image, component.shape, component.offset);
-    }
+    drawShape(component.image, component.shape, component.offset);
   }
 
-  export function drawShape(image: string, name: string, offset: IOffset) {
-    var shape = definitions.shapes[name];
+  export function drawShape(imageName: string, name: string, offset: IOffset) {
+    if (!hasImage(imageName)) {
+      return;
+    }
+    var shape = getShape(name);
     if (offset != null) {
       var ix = offset.ix || 0, iy = offset.iy || 0,
           ox = offset.ox || 0, oy = offset.oy || 0;
@@ -116,18 +111,49 @@ module ExtendedGenerator {
           w: side.out.w,
           h: side.out.h
         };
-        Generator.drawImage(image, offsetIn, offsetOut, side.transform || {});
+        drawImage(imageName, offsetIn, offsetOut, side.transform || {});
       }
     }
     else {
       for (var side of shape) {
-        drawSide(image, side);
+        drawSide(imageName, side);
       }
     }
   }
 
-  export function drawSide(image: string, side: ISide) {
-    Generator.drawImage(image, side.in, side.out, side.transform || {});
+  export function drawSide(imageName: string, side: ISide) {
+    drawImage(imageName, side.in, side.out, side.transform || {});
+  }
+
+  export function drawSprite(imageName: string, spriteName: string, name: string,
+      position: Generator.ISelection, transform?: Generator.ITransform) {
+    drawSide(imageName, {
+      in: getSprite(spriteName)[name],
+      out: position,
+      transform: transform
+    });
+  }
+
+  /** Runs Generator.drawImage and also checks if the image exists. */
+  export function drawImage(image: string): void;
+  export function drawImage(image: string, x: number, y: number): void;
+  export function drawImage(image: string, imageSelection: Generator.ISelection,
+      drawSelection: Generator.ISelection, transform?: Generator.ITransform): void;
+  export function drawImage(name: string, ...args: any[]) {
+    if (!hasImage(name)) {
+      return;
+    }
+    Generator.drawImage.apply(Generator.drawImage, [getImage(name)].concat(args));
+  }
+
+  /** Checks if the image exists and logs if it doesn't. */
+  export function hasImage(name: string): boolean {
+    var image = getImage(name);
+    if (!Generator.hasImage(image)) {
+      console.error(`Image ${image} does not exist.`);
+      return false;
+    }
+    return true;
   }
 
   export interface IImageCollection {

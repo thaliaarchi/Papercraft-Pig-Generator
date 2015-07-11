@@ -95,7 +95,7 @@ ExtendedGenerator.defineSprites({
   }
 });
 
-ExtendedGenerator.defineComponents({
+ExtendedGenerator.defineShapes({
   headAdvanced: [
     {in: {x:0,  y:8,  w:8, h:2}, out: {x:0,   y:64,  w:64, h:16}}, // Right 1
     {in: {x:2,  y:10, w:6, h:6}, out: {x:16,  y:80,  w:48, h:48}}, // Right 2
@@ -209,13 +209,13 @@ ExtendedGenerator.defineComponents({
 });
 
 // Define user inputs
-ExtendedGenerator.defineInput('texture', 'pig', [
+ExtendedGenerator.defineInput('pig', { type: 'texture', choices: [
   'Pig (Vanilla)', 'Pig (Faithful)', 'Pig (Space Pig)', 'Tepig (by Audra)', 'Tepig (by Elpis)'
-]);
-ExtendedGenerator.defineInput('texture', 'saddle', [
+]});
+ExtendedGenerator.defineInput('saddle', {[
   'Saddle (Vanilla)', 'Saddle (Faithful)', 'Saddle (Space Pig)'
 ]);
-ExtendedGenerator.defineInput('texture', 'armor', [
+ExtendedGenerator.defineInput('armor', [
   'Diamond Armor (Vanilla)', 'Gold Armor (Vanilla)', 'Chainmail Armor (Vanilla)', 'Iron Armor (Vanilla)',
   'Diamond Armor (Faithful)', 'Gold Armor (Faithful)', 'Chainmail Armor (Faithful)', 'Iron Armor (Faithful)',
   'Armor (Space Pig)'
