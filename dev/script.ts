@@ -209,17 +209,17 @@ ExtendedGenerator.defineShapes({
 });
 
 // Define user inputs
-ExtendedGenerator.defineInput('pig', { type: 'texture', choices: [
+ExtendedGenerator.defineInput('pig', {type: 'texture', choices: [
   'Pig (Vanilla)', 'Pig (Faithful)', 'Pig (Space Pig)', 'Tepig (by Audra)', 'Tepig (by Elpis)'
 ]});
-ExtendedGenerator.defineInput('saddle', {[
+ExtendedGenerator.defineInput('saddle', {type: 'texture', choices: [
   'Saddle (Vanilla)', 'Saddle (Faithful)', 'Saddle (Space Pig)'
-]);
-ExtendedGenerator.defineInput('armor', [
+]});
+ExtendedGenerator.defineInput('armor', {type: 'texture', choices: [
   'Diamond Armor (Vanilla)', 'Gold Armor (Vanilla)', 'Chainmail Armor (Vanilla)', 'Iron Armor (Vanilla)',
   'Diamond Armor (Faithful)', 'Gold Armor (Faithful)', 'Chainmail Armor (Faithful)', 'Iron Armor (Faithful)',
   'Armor (Space Pig)'
-]);
+]});
 
 // Layer user variables
 var showFolds = Generator.defineBooleanVariable('Show Folds', true),
