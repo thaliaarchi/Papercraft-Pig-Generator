@@ -1,7 +1,7 @@
 /// <reference path="generator.d.ts" />
 
 /**
- * An extended generator simplified generation tools
+ * An extended generator with simplified generation tools
  * @author TepigMC http://pixelpapercraft.com/user/tepigmc
  */
 module ExtendedGenerator {
@@ -29,26 +29,17 @@ module ExtendedGenerator {
   export function defineSprite(name: string, sprite: ISprite): void {
     definitions.sprites[name] = sprite;
   }
-  export function getImages(): IImageCollection {
-    return definitions.images;
-  }
-  export function getImage(name: string): string {
-    return definitions.images[name];
-  }
-  export function getShapes(): IShapeCollection {
-    return definitions.shapes;
-  }
-  export function getShape(name: string): IShape {
-    return definitions.shapes[name];
-  }
-  export function getSprites(): ISpriteCollection {
-    return definitions.sprites;
-  }
-  export function getSprite(name: string): ISprite {
-    return definitions.sprites[name];
-  }
+  export function getImages(): IImageCollection { return definitions.images; }
+  export function getImage(name: string): string { return definitions.images[name]; }
+  export function getShapes(): IShapeCollection { return definitions.shapes; }
+  export function getShape(name: string): IShape { return definitions.shapes[name]; }
+  export function getSprites(): ISpriteCollection { return definitions.sprites; }
+  export function getSprite(name: string): ISprite { return definitions.sprites[name]; }
 
-  /** Shortcut for defining an input. When type is 'texture', the width and height default is 64 and 32 */
+  /**
+   * Shortcut for defining an input.
+   * When type is 'texture', the standardWidth and standardHeight become 64 and 32 if not set.
+   */
   export function defineInput(imageName: string, options: Generator.IInputOptions) {
     if (options.type === 'texture') {
       if (options.standardWidth == null)  { options.standardWidth = 64; }
