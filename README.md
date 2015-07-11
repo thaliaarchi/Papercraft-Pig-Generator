@@ -1,10 +1,12 @@
-# MINECRAFT PIG PAPERCRAFT GENERATOR
+# MINECRAFT PIG PAPERCRAFT GENERATOR #
+
 Created by [TepigMC](http://pixelpapercraft.com/user/tepigmc) | View project on [GitHub](https://github.com/TepigMC/Papercraft-Pig-Generator)
 
 ![Pig wearing accessories](photos/minecraft-pig-advanced_thumb.jpg)
 ![Pig with seperate accessories](photos/minecraft-pig-advanced-2_thumb.jpg)
 
-## Features
+## Features ##
+
 This generator creates a pig papercraft with many optional customizations including:
 
   - Three head types
@@ -19,7 +21,8 @@ This generator creates a pig papercraft with many optional customizations includ
   - Titles
   - A transparent or opaque background
 
-## Textures
+## Textures ##
+
 The generator provides textures from vanilla Minecraft and also these texture packs.
 
   - [Faithful 32x](http://www.minecraftforum.net/forums/mapping-and-modding/resource-packs/1223254-faithful-32x32-pack-update-red-cat-clay-1-8) by Vattic,
@@ -33,17 +36,20 @@ If you want to use your own textures, here are the locations where you can find 
   - **Saddle texture** found at `assets\minecraft\textures\entity\pig\pig_saddle.png`
   - **Armor texture** (Layer 1) found at `assets\minecraft\textures\models\armor\<TYPE>_layer_1.png`
 
-## Sizing
+## Sizing ##
+
 The saddle, helmet, and boots can vary in texture size, so the generator was made to be as general as possible.
 If the helmet is covering the eyes or nose, then either modify the texture file to make it fit better, or
 if it is separate after you print it you can trim off the parts that cover the eyes or nose.
 
-## Printing
+## Printing ##
+
 The accessories page (second page) works the best if printed slightly larger than the pig page so it fits onto the pig better.
 If you have Windows Photo Viewer, this can be solved by unchecking 'Fit picture to frame' when you print the pig page
 and Checking 'Fit picture to frame' for the accessories page.
 
-## Credits
+## Credits ##
+
   - [TepigMC](http://pixelpapercraft.com/user/tepigmc) for the generator, template, and photos.
   - [lostminer](http://pixelpapercraft.com/user/lostminer) for upgrading Pixel Papercraft's
     generator engine to support the customization needed in this generator.
